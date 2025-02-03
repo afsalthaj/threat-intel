@@ -1,13 +1,12 @@
-### Security Threat Intelligence with Golem, leveraging RAG and LLaMA 2
+### Security Threat Intelligence with Golem, leveraging RAG and LLMA
 
 ### Example of a Unique Golem Workflow (Without SIEM Involvement):
 
-* Raw Event Ingestion: Firewall logs, endpoint logs, and DNS traffic are ingested directly into Golem nodes.
-* Decentralized Parsing & Classification: ach worker parses logs and classifies events (failed logins, suspicious file access, unusual DNS queries) without a SIEM.
-* Cross-Node Correlation: Workers exchange lightweight metadata (e.g., hashes, anonymized user IDs) to identify patterns across nodes. For instance, Node A detects failed logins from a suspicious IP, and Node B detects malware activity tied to the same user account.
+* Raw Event Ingestion: Firewall logs, endpoint logs, and DNS traffic are ingested directly into Golem nodes. This can be batch push to predefined set of workers. It doesn't really matter
+* The pre-processor step of structred log-event is skipped in this project
+* Without using a SIEM, a very simple streaming clustering algorithm which is distributed to find centroids of various logs
+* Inform the original workers of these centroids, and then they can be pushed to the centroid workers. 
 * LLM-Driven Analysis:The LLM analyzes these distributed events and suggests: "This appears to be a brute-force attack followed by privilege escalation and data exfiltration."
-* Automated Mitigation Recommendations:Golem suggests specific actions like isolating affected machines, revoking compromised credentials, etc.
-
 
 
 Log lines example:
