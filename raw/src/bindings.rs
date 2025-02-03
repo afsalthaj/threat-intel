@@ -3598,6 +3598,399 @@ pub mod golem {
 #[rustfmt::skip]
 #[allow(dead_code, clippy::all)]
 pub mod rag {
+    pub mod centroid_client {
+        #[allow(dead_code, clippy::all)]
+        pub mod raw_client {
+            #[used]
+            #[doc(hidden)]
+            static __FORCE_SECTION_REF: fn() = super::super::super::__link_custom_section_describing_imports;
+            use super::super::super::_rt;
+            pub type GolemRpcUri = super::super::super::golem::rpc::types::Uri;
+            pub type WasiIoPollable = super::super::super::wasi::io::poll::Pollable;
+            pub type LocalModel = super::super::super::rag::centroid_exports::api::LocalModel;
+            pub type NewModel = super::super::super::rag::centroid_exports::api::NewModel;
+            #[derive(Debug)]
+            #[repr(transparent)]
+            pub struct FutureProcessLocalModelResult {
+                handle: _rt::Resource<FutureProcessLocalModelResult>,
+            }
+            impl FutureProcessLocalModelResult {
+                #[doc(hidden)]
+                pub unsafe fn from_handle(handle: u32) -> Self {
+                    Self {
+                        handle: _rt::Resource::from_handle(handle),
+                    }
+                }
+                #[doc(hidden)]
+                pub fn take_handle(&self) -> u32 {
+                    _rt::Resource::take_handle(&self.handle)
+                }
+                #[doc(hidden)]
+                pub fn handle(&self) -> u32 {
+                    _rt::Resource::handle(&self.handle)
+                }
+            }
+            unsafe impl _rt::WasmResource for FutureProcessLocalModelResult {
+                #[inline]
+                unsafe fn drop(_handle: u32) {
+                    #[cfg(not(target_arch = "wasm32"))]
+                    unreachable!();
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        #[link(wasm_import_module = "rag:centroid-client/raw-client")]
+                        extern "C" {
+                            #[link_name = "[resource-drop]future-process-local-model-result"]
+                            fn drop(_: u32);
+                        }
+                        drop(_handle);
+                    }
+                }
+            }
+            #[derive(Debug)]
+            #[repr(transparent)]
+            pub struct Api {
+                handle: _rt::Resource<Api>,
+            }
+            impl Api {
+                #[doc(hidden)]
+                pub unsafe fn from_handle(handle: u32) -> Self {
+                    Self {
+                        handle: _rt::Resource::from_handle(handle),
+                    }
+                }
+                #[doc(hidden)]
+                pub fn take_handle(&self) -> u32 {
+                    _rt::Resource::take_handle(&self.handle)
+                }
+                #[doc(hidden)]
+                pub fn handle(&self) -> u32 {
+                    _rt::Resource::handle(&self.handle)
+                }
+            }
+            unsafe impl _rt::WasmResource for Api {
+                #[inline]
+                unsafe fn drop(_handle: u32) {
+                    #[cfg(not(target_arch = "wasm32"))]
+                    unreachable!();
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        #[link(wasm_import_module = "rag:centroid-client/raw-client")]
+                        extern "C" {
+                            #[link_name = "[resource-drop]api"]
+                            fn drop(_: u32);
+                        }
+                        drop(_handle);
+                    }
+                }
+            }
+            impl FutureProcessLocalModelResult {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn subscribe(&self) -> WasiIoPollable {
+                    unsafe {
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:centroid-client/raw-client")]
+                        extern "C" {
+                            #[link_name = "[method]future-process-local-model-result.subscribe"]
+                            fn wit_import(_: i32) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import((self).handle() as i32);
+                        super::super::super::wasi::io::poll::Pollable::from_handle(
+                            ret as u32,
+                        )
+                    }
+                }
+            }
+            impl FutureProcessLocalModelResult {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn get(&self) -> Option<Result<NewModel, _rt::String>> {
+                    unsafe {
+                        #[repr(align(4))]
+                        struct RetArea([::core::mem::MaybeUninit<u8>; 16]);
+                        let mut ret_area = RetArea(
+                            [::core::mem::MaybeUninit::uninit(); 16],
+                        );
+                        let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:centroid-client/raw-client")]
+                        extern "C" {
+                            #[link_name = "[method]future-process-local-model-result.get"]
+                            fn wit_import(_: i32, _: *mut u8);
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: *mut u8) {
+                            unreachable!()
+                        }
+                        wit_import((self).handle() as i32, ptr0);
+                        let l1 = i32::from(*ptr0.add(0).cast::<u8>());
+                        match l1 {
+                            0 => None,
+                            1 => {
+                                let e = {
+                                    let l2 = i32::from(*ptr0.add(4).cast::<u8>());
+                                    match l2 {
+                                        0 => {
+                                            let e = {
+                                                let l3 = *ptr0.add(8).cast::<*mut u8>();
+                                                let l4 = *ptr0.add(12).cast::<usize>();
+                                                let len5 = l4;
+                                                let bytes5 = _rt::Vec::from_raw_parts(
+                                                    l3.cast(),
+                                                    len5,
+                                                    len5,
+                                                );
+                                                super::super::super::rag::centroid_exports::api::NewModel {
+                                                    value: _rt::string_lift(bytes5),
+                                                }
+                                            };
+                                            Ok(e)
+                                        }
+                                        1 => {
+                                            let e = {
+                                                let l6 = *ptr0.add(8).cast::<*mut u8>();
+                                                let l7 = *ptr0.add(12).cast::<usize>();
+                                                let len8 = l7;
+                                                let bytes8 = _rt::Vec::from_raw_parts(
+                                                    l6.cast(),
+                                                    len8,
+                                                    len8,
+                                                );
+                                                _rt::string_lift(bytes8)
+                                            };
+                                            Err(e)
+                                        }
+                                        _ => _rt::invalid_enum_discriminant(),
+                                    }
+                                };
+                                Some(e)
+                            }
+                            _ => _rt::invalid_enum_discriminant(),
+                        }
+                    }
+                }
+            }
+            impl Api {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn new(location: &GolemRpcUri) -> Self {
+                    unsafe {
+                        let super::super::super::golem::rpc::types::Uri {
+                            value: value0,
+                        } = location;
+                        let vec1 = value0;
+                        let ptr1 = vec1.as_ptr().cast::<u8>();
+                        let len1 = vec1.len();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:centroid-client/raw-client")]
+                        extern "C" {
+                            #[link_name = "[constructor]api"]
+                            fn wit_import(_: *mut u8, _: usize) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: *mut u8, _: usize) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import(ptr1.cast_mut(), len1);
+                        Api::from_handle(ret as u32)
+                    }
+                }
+            }
+            impl Api {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn blocking_process_local_model(
+                    &self,
+                    log: &LocalModel,
+                ) -> Result<NewModel, _rt::String> {
+                    unsafe {
+                        #[repr(align(4))]
+                        struct RetArea([::core::mem::MaybeUninit<u8>; 12]);
+                        let mut ret_area = RetArea(
+                            [::core::mem::MaybeUninit::uninit(); 12],
+                        );
+                        let super::super::super::rag::centroid_exports::api::LocalModel {
+                            value: value0,
+                        } = log;
+                        let vec1 = value0;
+                        let ptr1 = vec1.as_ptr().cast::<u8>();
+                        let len1 = vec1.len();
+                        let ptr2 = ret_area.0.as_mut_ptr().cast::<u8>();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:centroid-client/raw-client")]
+                        extern "C" {
+                            #[link_name = "[method]api.blocking-process-local-model"]
+                            fn wit_import(_: i32, _: *mut u8, _: usize, _: *mut u8);
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: *mut u8, _: usize, _: *mut u8) {
+                            unreachable!()
+                        }
+                        wit_import((self).handle() as i32, ptr1.cast_mut(), len1, ptr2);
+                        let l3 = i32::from(*ptr2.add(0).cast::<u8>());
+                        match l3 {
+                            0 => {
+                                let e = {
+                                    let l4 = *ptr2.add(4).cast::<*mut u8>();
+                                    let l5 = *ptr2.add(8).cast::<usize>();
+                                    let len6 = l5;
+                                    let bytes6 = _rt::Vec::from_raw_parts(
+                                        l4.cast(),
+                                        len6,
+                                        len6,
+                                    );
+                                    super::super::super::rag::centroid_exports::api::NewModel {
+                                        value: _rt::string_lift(bytes6),
+                                    }
+                                };
+                                Ok(e)
+                            }
+                            1 => {
+                                let e = {
+                                    let l7 = *ptr2.add(4).cast::<*mut u8>();
+                                    let l8 = *ptr2.add(8).cast::<usize>();
+                                    let len9 = l8;
+                                    let bytes9 = _rt::Vec::from_raw_parts(
+                                        l7.cast(),
+                                        len9,
+                                        len9,
+                                    );
+                                    _rt::string_lift(bytes9)
+                                };
+                                Err(e)
+                            }
+                            _ => _rt::invalid_enum_discriminant(),
+                        }
+                    }
+                }
+            }
+            impl Api {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn process_local_model(
+                    &self,
+                    log: &LocalModel,
+                ) -> FutureProcessLocalModelResult {
+                    unsafe {
+                        let super::super::super::rag::centroid_exports::api::LocalModel {
+                            value: value0,
+                        } = log;
+                        let vec1 = value0;
+                        let ptr1 = vec1.as_ptr().cast::<u8>();
+                        let len1 = vec1.len();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:centroid-client/raw-client")]
+                        extern "C" {
+                            #[link_name = "[method]api.process-local-model"]
+                            fn wit_import(_: i32, _: *mut u8, _: usize) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: *mut u8, _: usize) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import(
+                            (self).handle() as i32,
+                            ptr1.cast_mut(),
+                            len1,
+                        );
+                        FutureProcessLocalModelResult::from_handle(ret as u32)
+                    }
+                }
+            }
+        }
+    }
+    pub mod centroid_exports {
+        #[allow(dead_code, clippy::all)]
+        pub mod api {
+            #[used]
+            #[doc(hidden)]
+            static __FORCE_SECTION_REF: fn() = super::super::super::__link_custom_section_describing_imports;
+            use super::super::super::_rt;
+            #[derive(Clone)]
+            pub struct LocalModel {
+                pub value: _rt::String,
+            }
+            impl ::core::fmt::Debug for LocalModel {
+                fn fmt(
+                    &self,
+                    f: &mut ::core::fmt::Formatter<'_>,
+                ) -> ::core::fmt::Result {
+                    f.debug_struct("LocalModel").field("value", &self.value).finish()
+                }
+            }
+            #[derive(Clone)]
+            pub struct NewModel {
+                pub value: _rt::String,
+            }
+            impl ::core::fmt::Debug for NewModel {
+                fn fmt(
+                    &self,
+                    f: &mut ::core::fmt::Formatter<'_>,
+                ) -> ::core::fmt::Result {
+                    f.debug_struct("NewModel").field("value", &self.value).finish()
+                }
+            }
+            #[allow(unused_unsafe, clippy::all)]
+            pub fn process_local_model(
+                log: &LocalModel,
+            ) -> Result<NewModel, _rt::String> {
+                unsafe {
+                    #[repr(align(4))]
+                    struct RetArea([::core::mem::MaybeUninit<u8>; 12]);
+                    let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 12]);
+                    let LocalModel { value: value0 } = log;
+                    let vec1 = value0;
+                    let ptr1 = vec1.as_ptr().cast::<u8>();
+                    let len1 = vec1.len();
+                    let ptr2 = ret_area.0.as_mut_ptr().cast::<u8>();
+                    #[cfg(target_arch = "wasm32")]
+                    #[link(wasm_import_module = "rag:centroid-exports/api")]
+                    extern "C" {
+                        #[link_name = "process-local-model"]
+                        fn wit_import(_: *mut u8, _: usize, _: *mut u8);
+                    }
+                    #[cfg(not(target_arch = "wasm32"))]
+                    fn wit_import(_: *mut u8, _: usize, _: *mut u8) {
+                        unreachable!()
+                    }
+                    wit_import(ptr1.cast_mut(), len1, ptr2);
+                    let l3 = i32::from(*ptr2.add(0).cast::<u8>());
+                    match l3 {
+                        0 => {
+                            let e = {
+                                let l4 = *ptr2.add(4).cast::<*mut u8>();
+                                let l5 = *ptr2.add(8).cast::<usize>();
+                                let len6 = l5;
+                                let bytes6 = _rt::Vec::from_raw_parts(
+                                    l4.cast(),
+                                    len6,
+                                    len6,
+                                );
+                                NewModel {
+                                    value: _rt::string_lift(bytes6),
+                                }
+                            };
+                            Ok(e)
+                        }
+                        1 => {
+                            let e = {
+                                let l7 = *ptr2.add(4).cast::<*mut u8>();
+                                let l8 = *ptr2.add(8).cast::<usize>();
+                                let len9 = l8;
+                                let bytes9 = _rt::Vec::from_raw_parts(
+                                    l7.cast(),
+                                    len9,
+                                    len9,
+                                );
+                                _rt::string_lift(bytes9)
+                            };
+                            Err(e)
+                        }
+                        _ => _rt::invalid_enum_discriminant(),
+                    }
+                }
+            }
+        }
+    }
     pub mod embeddings_client {
         #[allow(dead_code, clippy::all)]
         pub mod embeddings_client {
@@ -5099,9 +5492,9 @@ pub(crate) use __export_raw_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.36.0:rag:raw:raw:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 3620] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xaa\x1b\x01A\x02\x01\
-A\x15\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 4252] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xa2\x20\x01A\x02\x01\
+A\x1b\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\
 \x16[method]pollable.ready\x01\x02\x01@\x01\x04self\x01\x01\0\x04\0\x16[method]p\
 ollable.block\x01\x03\x01p\x01\x01py\x01@\x01\x02in\x04\0\x05\x04\0\x04poll\x01\x06\
 \x03\0\x12wasi:io/poll@0.2.0\x05\0\x02\x03\0\0\x08pollable\x01B@\x02\x03\x02\x01\
@@ -5136,48 +5529,62 @@ c.invoke\x01.\x01i&\x01@\x03\x04self)\x0dfunction-names\x0ffunction-params*\0/\x
 \02\x04\0&[method]future-invoke-result.subscribe\x013\x01k+\x01@\x01\x04self1\04\
 \x04\0\x20[method]future-invoke-result.get\x015\x01@\x01\x03vnt\"\0\x20\x04\0\x0d\
 extract-value\x016\x01@\x01\x03vnt\"\0\x15\x04\0\x0cextract-type\x017\x03\0\x15g\
-olem:rpc/types@0.1.1\x05\x02\x01B\x07\x01r\x01\x0bdescriptions\x04\0\x13add-thre\
-at-response\x03\0\0\x01r\x02\x02ids\x0bdescriptions\x04\0\x0cthreat-intel\x03\0\x02\
-\x01j\x01\x01\x01s\x01@\x01\x0cthreat-intel\x03\0\x04\x04\0\x0aadd-threat\x01\x05\
-\x03\0\x1arag:embeddings-exports/api\x05\x03\x02\x03\0\x01\x03uri\x02\x03\0\x02\x13\
-add-threat-response\x02\x03\0\x02\x0cthreat-intel\x01B\x1b\x02\x03\x02\x01\x04\x04\
-\0\x0dgolem-rpc-uri\x03\0\0\x02\x03\x02\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\
-\x02\x03\x02\x01\x05\x04\0\x13add-threat-response\x03\0\x04\x02\x03\x02\x01\x06\x04\
-\0\x0cthreat-intel\x03\0\x06\x04\0\x18future-add-threat-result\x03\x01\x04\0\x03\
-api\x03\x01\x01h\x08\x01i\x03\x01@\x01\x04self\x0a\0\x0b\x04\0*[method]future-ad\
-d-threat-result.subscribe\x01\x0c\x01j\x01\x05\x01s\x01k\x0d\x01@\x01\x04self\x0a\
-\0\x0e\x04\0$[method]future-add-threat-result.get\x01\x0f\x01i\x09\x01@\x01\x08l\
-ocation\x01\0\x10\x04\0\x10[constructor]api\x01\x11\x01h\x09\x01@\x02\x04self\x12\
-\x0cthreat-intel\x07\0\x0d\x04\0\x1f[method]api.blocking-add-threat\x01\x13\x01i\
-\x08\x01@\x02\x04self\x12\x0cthreat-intel\x07\0\x14\x04\0\x16[method]api.add-thr\
-eat\x01\x15\x03\0'rag:embeddings-client/embeddings-client\x05\x07\x01B\x09\x01r\x01\
-\x05values\x04\0\x07context\x03\0\0\x01r\x01\x05values\x04\0\x0cllm-response\x03\
-\0\x02\x01r\x01\x0bdescriptions\x04\0\x06prompt\x03\0\x04\x01j\x01\x03\x01s\x01@\
-\x02\x06prompt\x05\x07context\x01\0\x06\x04\0\x09ask-model\x01\x07\x03\0\x13rag:\
-llm-exports/api\x05\x08\x02\x03\0\x04\x07context\x02\x03\0\x04\x0cllm-response\x02\
-\x03\0\x04\x06prompt\x01B\x1d\x02\x03\x02\x01\x04\x04\0\x0dgolem-rpc-uri\x03\0\0\
-\x02\x03\x02\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\x02\x03\x02\x01\x09\x04\
-\0\x07context\x03\0\x04\x02\x03\x02\x01\x0a\x04\0\x0cllm-response\x03\0\x06\x02\x03\
-\x02\x01\x0b\x04\0\x06prompt\x03\0\x08\x04\0\x17future-ask-model-result\x03\x01\x04\
-\0\x03api\x03\x01\x01h\x0a\x01i\x03\x01@\x01\x04self\x0c\0\x0d\x04\0)[method]fut\
-ure-ask-model-result.subscribe\x01\x0e\x01j\x01\x07\x01s\x01k\x0f\x01@\x01\x04se\
-lf\x0c\0\x10\x04\0#[method]future-ask-model-result.get\x01\x11\x01i\x0b\x01@\x01\
-\x08location\x01\0\x12\x04\0\x10[constructor]api\x01\x13\x01h\x0b\x01@\x03\x04se\
-lf\x14\x06prompt\x09\x07context\x05\0\x0f\x04\0\x1e[method]api.blocking-ask-mode\
-l\x01\x15\x01i\x0a\x01@\x03\x04self\x14\x06prompt\x09\x07context\x05\0\x16\x04\0\
-\x15[method]api.ask-model\x01\x17\x03\0\x19rag:llm-client/llm-client\x05\x0c\x01\
-B\x16\x01r\x02\x04paths\x04hashs\x04\0\x09file-info\x03\0\0\x01r\x02\x02ips\x08h\
-ostnames\x04\0\x09host-info\x03\0\x02\x01r\x01\x07messages\x04\0\x09log-event\x03\
-\0\x04\x01r\x05\x09source-ips\x0edestination-ips\x04port{\x08protocols\x06action\
-s\x04\0\x0cnetwork-info\x03\0\x06\x01r\x03\x04names\x03pidy\x04paths\x04\0\x0cpr\
-ocess-info\x03\0\x08\x01r\x01\x06details\x04\0\x08response\x03\0\x0a\x01r\x02\x08\
-usernames\x04roles\x04\0\x09user-info\x03\0\x0c\x01k\x07\x01k\x09\x01k\x01\x01r\x0a\
-\x09timestamps\x06sources\x0aevent-types\x08severitys\x04host\x03\x04user\x0d\x07\
-network\x0e\x07process\x0f\x04file\x10\x07messages\x04\0\x0esecurity-event\x03\0\
-\x11\x01j\x01\x0b\x01s\x01@\x01\x03log\x05\0\x13\x04\0\x11process-log-event\x01\x14\
-\x04\0\x13rag:raw-exports/api\x05\x0d\x04\0\x0brag:raw/raw\x04\0\x0b\x09\x01\0\x03\
-raw\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10\
-wit-bindgen-rust\x060.36.0";
+olem:rpc/types@0.1.1\x05\x02\x01B\x07\x01r\x01\x05values\x04\0\x0blocal-model\x03\
+\0\0\x01r\x01\x05values\x04\0\x09new-model\x03\0\x02\x01j\x01\x03\x01s\x01@\x01\x03\
+log\x01\0\x04\x04\0\x13process-local-model\x01\x05\x03\0\x18rag:centroid-exports\
+/api\x05\x03\x02\x03\0\x01\x03uri\x02\x03\0\x02\x0blocal-model\x02\x03\0\x02\x09\
+new-model\x01B\x1b\x02\x03\x02\x01\x04\x04\0\x0dgolem-rpc-uri\x03\0\0\x02\x03\x02\
+\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\x02\x03\x02\x01\x05\x04\0\x0blocal-\
+model\x03\0\x04\x02\x03\x02\x01\x06\x04\0\x09new-model\x03\0\x06\x04\0!future-pr\
+ocess-local-model-result\x03\x01\x04\0\x03api\x03\x01\x01h\x08\x01i\x03\x01@\x01\
+\x04self\x0a\0\x0b\x04\03[method]future-process-local-model-result.subscribe\x01\
+\x0c\x01j\x01\x07\x01s\x01k\x0d\x01@\x01\x04self\x0a\0\x0e\x04\0-[method]future-\
+process-local-model-result.get\x01\x0f\x01i\x09\x01@\x01\x08location\x01\0\x10\x04\
+\0\x10[constructor]api\x01\x11\x01h\x09\x01@\x02\x04self\x12\x03log\x05\0\x0d\x04\
+\0([method]api.blocking-process-local-model\x01\x13\x01i\x08\x01@\x02\x04self\x12\
+\x03log\x05\0\x14\x04\0\x1f[method]api.process-local-model\x01\x15\x03\0\x1erag:\
+centroid-client/raw-client\x05\x07\x01B\x07\x01r\x01\x0bdescriptions\x04\0\x13ad\
+d-threat-response\x03\0\0\x01r\x02\x02ids\x0bdescriptions\x04\0\x0cthreat-intel\x03\
+\0\x02\x01j\x01\x01\x01s\x01@\x01\x0cthreat-intel\x03\0\x04\x04\0\x0aadd-threat\x01\
+\x05\x03\0\x1arag:embeddings-exports/api\x05\x08\x02\x03\0\x04\x13add-threat-res\
+ponse\x02\x03\0\x04\x0cthreat-intel\x01B\x1b\x02\x03\x02\x01\x04\x04\0\x0dgolem-\
+rpc-uri\x03\0\0\x02\x03\x02\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\x02\x03\x02\
+\x01\x09\x04\0\x13add-threat-response\x03\0\x04\x02\x03\x02\x01\x0a\x04\0\x0cthr\
+eat-intel\x03\0\x06\x04\0\x18future-add-threat-result\x03\x01\x04\0\x03api\x03\x01\
+\x01h\x08\x01i\x03\x01@\x01\x04self\x0a\0\x0b\x04\0*[method]future-add-threat-re\
+sult.subscribe\x01\x0c\x01j\x01\x05\x01s\x01k\x0d\x01@\x01\x04self\x0a\0\x0e\x04\
+\0$[method]future-add-threat-result.get\x01\x0f\x01i\x09\x01@\x01\x08location\x01\
+\0\x10\x04\0\x10[constructor]api\x01\x11\x01h\x09\x01@\x02\x04self\x12\x0cthreat\
+-intel\x07\0\x0d\x04\0\x1f[method]api.blocking-add-threat\x01\x13\x01i\x08\x01@\x02\
+\x04self\x12\x0cthreat-intel\x07\0\x14\x04\0\x16[method]api.add-threat\x01\x15\x03\
+\0'rag:embeddings-client/embeddings-client\x05\x0b\x01B\x09\x01r\x01\x05values\x04\
+\0\x07context\x03\0\0\x01r\x01\x05values\x04\0\x0cllm-response\x03\0\x02\x01r\x01\
+\x0bdescriptions\x04\0\x06prompt\x03\0\x04\x01j\x01\x03\x01s\x01@\x02\x06prompt\x05\
+\x07context\x01\0\x06\x04\0\x09ask-model\x01\x07\x03\0\x13rag:llm-exports/api\x05\
+\x0c\x02\x03\0\x06\x07context\x02\x03\0\x06\x0cllm-response\x02\x03\0\x06\x06pro\
+mpt\x01B\x1d\x02\x03\x02\x01\x04\x04\0\x0dgolem-rpc-uri\x03\0\0\x02\x03\x02\x01\x01\
+\x04\0\x10wasi-io-pollable\x03\0\x02\x02\x03\x02\x01\x0d\x04\0\x07context\x03\0\x04\
+\x02\x03\x02\x01\x0e\x04\0\x0cllm-response\x03\0\x06\x02\x03\x02\x01\x0f\x04\0\x06\
+prompt\x03\0\x08\x04\0\x17future-ask-model-result\x03\x01\x04\0\x03api\x03\x01\x01\
+h\x0a\x01i\x03\x01@\x01\x04self\x0c\0\x0d\x04\0)[method]future-ask-model-result.\
+subscribe\x01\x0e\x01j\x01\x07\x01s\x01k\x0f\x01@\x01\x04self\x0c\0\x10\x04\0#[m\
+ethod]future-ask-model-result.get\x01\x11\x01i\x0b\x01@\x01\x08location\x01\0\x12\
+\x04\0\x10[constructor]api\x01\x13\x01h\x0b\x01@\x03\x04self\x14\x06prompt\x09\x07\
+context\x05\0\x0f\x04\0\x1e[method]api.blocking-ask-model\x01\x15\x01i\x0a\x01@\x03\
+\x04self\x14\x06prompt\x09\x07context\x05\0\x16\x04\0\x15[method]api.ask-model\x01\
+\x17\x03\0\x19rag:llm-client/llm-client\x05\x10\x01B\x16\x01r\x02\x04paths\x04ha\
+shs\x04\0\x09file-info\x03\0\0\x01r\x02\x02ips\x08hostnames\x04\0\x09host-info\x03\
+\0\x02\x01r\x01\x07messages\x04\0\x09log-event\x03\0\x04\x01r\x05\x09source-ips\x0e\
+destination-ips\x04port{\x08protocols\x06actions\x04\0\x0cnetwork-info\x03\0\x06\
+\x01r\x03\x04names\x03pidy\x04paths\x04\0\x0cprocess-info\x03\0\x08\x01r\x01\x06\
+details\x04\0\x08response\x03\0\x0a\x01r\x02\x08usernames\x04roles\x04\0\x09user\
+-info\x03\0\x0c\x01k\x07\x01k\x09\x01k\x01\x01r\x0a\x09timestamps\x06sources\x0a\
+event-types\x08severitys\x04host\x03\x04user\x0d\x07network\x0e\x07process\x0f\x04\
+file\x10\x07messages\x04\0\x0esecurity-event\x03\0\x11\x01j\x01\x0b\x01s\x01@\x01\
+\x03log\x05\0\x13\x04\0\x11process-log-event\x01\x14\x04\0\x13rag:raw-exports/ap\
+i\x05\x11\x04\0\x0brag:raw/raw\x04\0\x0b\x09\x01\0\x03raw\x03\0\0\0G\x09producer\
+s\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10wit-bindgen-rust\x060.3\
+6.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

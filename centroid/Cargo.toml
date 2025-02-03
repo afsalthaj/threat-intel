@@ -1,0 +1,19 @@
+[package]
+name = "centroid"
+version = "0.1.0"
+edition = "2021"
+
+[package.metadata.component.target]
+path = "wit-generated"
+
+[package.metadata.component.target.dependencies."rag:centroid-exports"]
+path = "wit-generated/deps/rag_centroid-exports"
+
+[dependencies.wit-bindgen-rt]
+version = "0.37.0"
+features = ["bitflags"]
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+required-features = []

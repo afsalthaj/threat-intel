@@ -1,5 +1,5 @@
 [workspace]
-members = ["embeddings", "llm", "raw"]
+members = ["embeddings", "llm", "raw", "centroid"]
 resolver = "2"
 
 [profile.release]

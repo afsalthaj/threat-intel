@@ -9,6 +9,12 @@ path = "wit-generated"
 [package.metadata.component.target.dependencies."golem:rpc"]
 path = "wit-generated/deps/wasm-rpc"
 
+[package.metadata.component.target.dependencies."rag:centroid-client"]
+path = "wit-generated/deps/rag_centroid-client"
+
+[package.metadata.component.target.dependencies."rag:centroid-exports"]
+path = "wit-generated/deps/rag_centroid-exports"
+
 [package.metadata.component.target.dependencies."rag:embeddings-client"]
 path = "wit-generated/deps/rag_embeddings-client"
 

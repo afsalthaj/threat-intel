@@ -1,0 +1,13 @@
+package rag:centroid-exports;
+
+interface api {
+  record local-model {
+    value: string,
+  }
+  record new-model {
+    value: string,
+  }
+  process-local-model: func(log: local-model) -> result<new-model, string>;
+}
+
+interface raw-inline-functions {}
