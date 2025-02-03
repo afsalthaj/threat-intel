@@ -6,8 +6,20 @@ edition = "2021"
 [package.metadata.component.target]
 path = "wit-generated"
 
+[package.metadata.component.target.dependencies."golem:rpc"]
+path = "wit-generated/deps/wasm-rpc"
+
 [package.metadata.component.target.dependencies."rag:cluster-exports"]
 path = "wit-generated/deps/rag_cluster-exports"
+
+[package.metadata.component.target.dependencies."rag:llm-client"]
+path = "wit-generated/deps/rag_llm-client"
+
+[package.metadata.component.target.dependencies."rag:llm-exports"]
+path = "wit-generated/deps/rag_llm-exports"
+
+[package.metadata.component.target.dependencies."wasi:io"]
+path = "wit-generated/deps/io"
 
 [dependencies.wit-bindgen-rt]
 version = "0.37.0"

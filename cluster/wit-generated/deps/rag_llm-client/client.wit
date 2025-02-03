@@ -1,0 +1,20 @@
+package rag:llm-client;
+
+interface llm-client {
+  use golem:rpc/types@0.1.1.{ uri as golem-rpc-uri };
+  use wasi:io/poll@0.2.0.{ pollable as wasi-io-pollable };
+  use rag:llm-exports/api.{ context, llm-response, prompt };
+  resource future-ask-model-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<llm-response, string>>;
+  }
+  resource api {
+    constructor(location: golem-rpc-uri);
+    blocking-ask-model: func(prompt: prompt, context: context) -> result<llm-response, string>;
+    ask-model: func(prompt: prompt, context: context) -> future-ask-model-result;
+  }
+}
+
+world wasm-rpc-client-llm {
+  export llm-client;
+}

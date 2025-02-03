@@ -42,7 +42,6 @@ path = "wit-generated/deps/io"
 [dependencies]
 regex = "1.11.1"
 serde_json = "1.0.138"
-uuid = { version = "1.12.1", features = ["v4"] }
 
 [dependencies.linfa]
 version = "0.7.1"
@@ -65,6 +64,10 @@ version = "1.1.0"
 [dependencies.serde]
 version = "1.0.217"
 features = ["derive"]
+
+[dependencies.uuid]
+version = "1.12.1"
+features = ["v4"]
 
 [dependencies.wit-bindgen-rt]
 version = "0.37.0"

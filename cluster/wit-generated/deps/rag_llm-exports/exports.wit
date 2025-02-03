@@ -1,0 +1,16 @@
+package rag:llm-exports;
+
+interface api {
+  record context {
+    value: string,
+  }
+  record llm-response {
+    value: string,
+  }
+  record prompt {
+    description: string,
+  }
+  ask-model: func(prompt: prompt, context: context) -> result<llm-response, string>;
+}
+
+interface llm-inline-functions {}

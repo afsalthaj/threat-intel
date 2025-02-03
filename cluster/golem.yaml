@@ -6,3 +6,7 @@
 components:
   cluster:
     template: rust
+dependencies:
+  cluster:
+    - type: wasm-rpc
+      target: llm    

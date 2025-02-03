@@ -2,4 +2,5 @@ package rag:cluster;
 
 world cluster {
   export rag:cluster-exports/api;
+  import rag:llm-client/llm-client;
 }
