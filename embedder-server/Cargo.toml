@@ -1,0 +1,16 @@
+[package]
+name = "embeddings"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "embedder-server"
+path = "src/main.rs"
+
+[dependencies]
+actix-web = "4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+rust-bert = { version = "0.23.0", features = ["download-libtorch"] }
+tch = { version = "0.17.0", features = ["download-libtorch"] }
+tokio = "1.43.0"

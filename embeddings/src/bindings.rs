@@ -13,110 +13,122 @@ pub mod exports {
                 static __FORCE_SECTION_REF: fn() = super::super::super::super::__link_custom_section_describing_imports;
                 use super::super::super::super::_rt;
                 #[derive(Clone)]
-                pub struct AddThreatResponse {
-                    pub description: _rt::String,
+                pub struct LogEmbedding {
+                    pub value: _rt::Vec<_rt::Vec<f32>>,
                 }
-                impl ::core::fmt::Debug for AddThreatResponse {
+                impl ::core::fmt::Debug for LogEmbedding {
                     fn fmt(
                         &self,
                         f: &mut ::core::fmt::Formatter<'_>,
                     ) -> ::core::fmt::Result {
-                        f.debug_struct("AddThreatResponse")
-                            .field("description", &self.description)
-                            .finish()
-                    }
-                }
-                #[derive(Clone)]
-                pub struct ThreatIntel {
-                    pub id: _rt::String,
-                    pub description: _rt::String,
-                }
-                impl ::core::fmt::Debug for ThreatIntel {
-                    fn fmt(
-                        &self,
-                        f: &mut ::core::fmt::Formatter<'_>,
-                    ) -> ::core::fmt::Result {
-                        f.debug_struct("ThreatIntel")
-                            .field("id", &self.id)
-                            .field("description", &self.description)
+                        f.debug_struct("LogEmbedding")
+                            .field("value", &self.value)
                             .finish()
                     }
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
-                pub unsafe fn _export_add_threat_cabi<T: Guest>(
+                pub unsafe fn _export_get_log_embedding_cabi<T: Guest>(
                     arg0: *mut u8,
                     arg1: usize,
-                    arg2: *mut u8,
-                    arg3: usize,
                 ) -> *mut u8 {
                     #[cfg(target_arch = "wasm32")] _rt::run_ctors_once();
                     let len0 = arg1;
                     let bytes0 = _rt::Vec::from_raw_parts(arg0.cast(), len0, len0);
-                    let len1 = arg3;
-                    let bytes1 = _rt::Vec::from_raw_parts(arg2.cast(), len1, len1);
-                    let result2 = T::add_threat(ThreatIntel {
-                        id: _rt::string_lift(bytes0),
-                        description: _rt::string_lift(bytes1),
-                    });
-                    let ptr3 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
-                    match result2 {
+                    let result1 = T::get_log_embedding(_rt::string_lift(bytes0));
+                    let ptr2 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
+                    match result1 {
                         Ok(e) => {
-                            *ptr3.add(0).cast::<u8>() = (0i32) as u8;
-                            let AddThreatResponse { description: description4 } = e;
-                            let vec5 = (description4.into_bytes()).into_boxed_slice();
-                            let ptr5 = vec5.as_ptr().cast::<u8>();
+                            *ptr2.add(0).cast::<u8>() = (0i32) as u8;
+                            let LogEmbedding { value: value3 } = e;
+                            let vec5 = value3;
                             let len5 = vec5.len();
-                            ::core::mem::forget(vec5);
-                            *ptr3.add(8).cast::<usize>() = len5;
-                            *ptr3.add(4).cast::<*mut u8>() = ptr5.cast_mut();
+                            let layout5 = _rt::alloc::Layout::from_size_align_unchecked(
+                                vec5.len() * 8,
+                                4,
+                            );
+                            let result5 = if layout5.size() != 0 {
+                                let ptr = _rt::alloc::alloc(layout5).cast::<u8>();
+                                if ptr.is_null() {
+                                    _rt::alloc::handle_alloc_error(layout5);
+                                }
+                                ptr
+                            } else {
+                                ::core::ptr::null_mut()
+                            };
+                            for (i, e) in vec5.into_iter().enumerate() {
+                                let base = result5.add(i * 8);
+                                {
+                                    let vec4 = (e).into_boxed_slice();
+                                    let ptr4 = vec4.as_ptr().cast::<u8>();
+                                    let len4 = vec4.len();
+                                    ::core::mem::forget(vec4);
+                                    *base.add(4).cast::<usize>() = len4;
+                                    *base.add(0).cast::<*mut u8>() = ptr4.cast_mut();
+                                }
+                            }
+                            *ptr2.add(8).cast::<usize>() = len5;
+                            *ptr2.add(4).cast::<*mut u8>() = result5;
                         }
                         Err(e) => {
-                            *ptr3.add(0).cast::<u8>() = (1i32) as u8;
+                            *ptr2.add(0).cast::<u8>() = (1i32) as u8;
                             let vec6 = (e.into_bytes()).into_boxed_slice();
                             let ptr6 = vec6.as_ptr().cast::<u8>();
                             let len6 = vec6.len();
                             ::core::mem::forget(vec6);
-                            *ptr3.add(8).cast::<usize>() = len6;
-                            *ptr3.add(4).cast::<*mut u8>() = ptr6.cast_mut();
+                            *ptr2.add(8).cast::<usize>() = len6;
+                            *ptr2.add(4).cast::<*mut u8>() = ptr6.cast_mut();
                         }
                     };
-                    ptr3
+                    ptr2
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
-                pub unsafe fn __post_return_add_threat<T: Guest>(arg0: *mut u8) {
+                pub unsafe fn __post_return_get_log_embedding<T: Guest>(arg0: *mut u8) {
                     let l0 = i32::from(*arg0.add(0).cast::<u8>());
                     match l0 {
                         0 => {
                             let l1 = *arg0.add(4).cast::<*mut u8>();
                             let l2 = *arg0.add(8).cast::<usize>();
-                            _rt::cabi_dealloc(l1, l2, 1);
+                            let base6 = l1;
+                            let len6 = l2;
+                            for i in 0..len6 {
+                                let base = base6.add(i * 8);
+                                {
+                                    let l3 = *base.add(0).cast::<*mut u8>();
+                                    let l4 = *base.add(4).cast::<usize>();
+                                    let base5 = l3;
+                                    let len5 = l4;
+                                    _rt::cabi_dealloc(base5, len5 * 4, 4);
+                                }
+                            }
+                            _rt::cabi_dealloc(base6, len6 * 8, 4);
                         }
                         _ => {
-                            let l3 = *arg0.add(4).cast::<*mut u8>();
-                            let l4 = *arg0.add(8).cast::<usize>();
-                            _rt::cabi_dealloc(l3, l4, 1);
+                            let l7 = *arg0.add(4).cast::<*mut u8>();
+                            let l8 = *arg0.add(8).cast::<usize>();
+                            _rt::cabi_dealloc(l7, l8, 1);
                         }
                     }
                 }
                 pub trait Guest {
-                    fn add_threat(
-                        threat_intel: ThreatIntel,
-                    ) -> Result<AddThreatResponse, _rt::String>;
+                    fn get_log_embedding(
+                        log: _rt::String,
+                    ) -> Result<LogEmbedding, _rt::String>;
                 }
                 #[doc(hidden)]
                 macro_rules! __export_rag_embeddings_exports_api_cabi {
                     ($ty:ident with_types_in $($path_to_types:tt)*) => {
                         const _ : () = { #[export_name =
-                        "rag:embeddings-exports/api#add-threat"] unsafe extern "C" fn
-                        export_add_threat(arg0 : * mut u8, arg1 : usize, arg2 : * mut u8,
-                        arg3 : usize,) -> * mut u8 { $($path_to_types)*::
-                        _export_add_threat_cabi::<$ty > (arg0, arg1, arg2, arg3) }
+                        "rag:embeddings-exports/api#get-log-embedding"] unsafe extern "C"
+                        fn export_get_log_embedding(arg0 : * mut u8, arg1 : usize,) -> *
+                        mut u8 { $($path_to_types)*::
+                        _export_get_log_embedding_cabi::<$ty > (arg0, arg1) }
                         #[export_name =
-                        "cabi_post_rag:embeddings-exports/api#add-threat"] unsafe extern
-                        "C" fn _post_return_add_threat(arg0 : * mut u8,) {
-                        $($path_to_types)*:: __post_return_add_threat::<$ty > (arg0) } };
+                        "cabi_post_rag:embeddings-exports/api#get-log-embedding"] unsafe
+                        extern "C" fn _post_return_get_log_embedding(arg0 : * mut u8,) {
+                        $($path_to_types)*:: __post_return_get_log_embedding::<$ty >
+                        (arg0) } };
                     };
                 }
                 #[doc(hidden)]
@@ -132,12 +144,11 @@ pub mod exports {
 }
 #[rustfmt::skip]
 mod _rt {
-    pub use alloc_crate::string::String;
+    pub use alloc_crate::vec::Vec;
     #[cfg(target_arch = "wasm32")]
     pub fn run_ctors_once() {
         wit_bindgen_rt::run_ctors_once();
     }
-    pub use alloc_crate::vec::Vec;
     pub unsafe fn string_lift(bytes: Vec<u8>) -> String {
         if cfg!(debug_assertions) {
             String::from_utf8(bytes).unwrap()
@@ -145,6 +156,7 @@ mod _rt {
             String::from_utf8_unchecked(bytes)
         }
     }
+    pub use alloc_crate::alloc;
     pub unsafe fn cabi_dealloc(ptr: *mut u8, size: usize, align: usize) {
         if size == 0 {
             return;
@@ -152,8 +164,8 @@ mod _rt {
         let layout = alloc::Layout::from_size_align_unchecked(size, align);
         alloc::dealloc(ptr, layout);
     }
+    pub use alloc_crate::string::String;
     extern crate alloc as alloc_crate;
-    pub use alloc_crate::alloc;
 }
 /// Generates `#[no_mangle]` functions to export the specified type as the
 /// root implementation of all generated traits.
@@ -188,14 +200,13 @@ pub(crate) use __export_embeddings_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.36.0:rag:embeddings:embeddings:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 318] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xbd\x01\x01A\x02\x01\
-A\x02\x01B\x07\x01r\x01\x0bdescriptions\x04\0\x13add-threat-response\x03\0\0\x01\
-r\x02\x02ids\x0bdescriptions\x04\0\x0cthreat-intel\x03\0\x02\x01j\x01\x01\x01s\x01\
-@\x01\x0cthreat-intel\x03\0\x04\x04\0\x0aadd-threat\x01\x05\x04\0\x1arag:embeddi\
-ngs-exports/api\x05\0\x04\0\x19rag:embeddings/embeddings\x04\0\x0b\x10\x01\0\x0a\
-embeddings\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070\
-.220.0\x10wit-bindgen-rust\x060.36.0";
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 272] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x8f\x01\x01A\x02\x01\
+A\x02\x01B\x07\x01pv\x01p\0\x01r\x01\x05value\x01\x04\0\x0dlog-embedding\x03\0\x02\
+\x01j\x01\x03\x01s\x01@\x01\x03logs\0\x04\x04\0\x11get-log-embedding\x01\x05\x04\
+\0\x1arag:embeddings-exports/api\x05\0\x04\0\x19rag:embeddings/embeddings\x04\0\x0b\
+\x10\x01\0\x0aembeddings\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-\
+component\x070.220.0\x10wit-bindgen-rust\x060.36.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

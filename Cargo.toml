@@ -1,5 +1,6 @@
 [workspace]
 members = ["embeddings", "llm", "raw", "centroid"]
+exclude = ["embedder-server"]
 resolver = "2"
 
 [profile.release]

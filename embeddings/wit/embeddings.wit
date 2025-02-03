@@ -1,16 +1,11 @@
 package rag:embeddings;
 
 interface api {
- record threat-intel {
-   id: string,
-   description: string
- }
+  record log-embedding {
+    value: list<list<f32>>
+  }
 
- record add-threat-response {
-    description: string
- }
-
-  add-threat: func(threat-intel: threat-intel) -> result<add-threat-response, string>;
+  get-log-embedding: func(log: string) -> result<log-embedding, string>;
 }
 
 world embeddings {
