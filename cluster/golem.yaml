@@ -9,4 +9,4 @@ components:
 dependencies:
   cluster:
     - type: wasm-rpc
-      target: llm    
+      target: llm
