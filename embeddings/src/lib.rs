@@ -1,5 +1,5 @@
-use reqwest::*;
 use crate::bindings::exports::rag::embeddings_exports::api::{Guest, LogEmbedding};
+use reqwest::*;
 
 mod bindings;
 
@@ -16,14 +16,9 @@ impl Guest for Component {
             .send()
             .expect("Request failed");
 
-        let embedding = response
-            .json::<Vec<f32>>()
-            .expect("Invalid response");
+        let embedding = response.json::<Vec<f32>>().expect("Invalid response");
 
-        Ok(LogEmbedding {
-            value: embedding
-        })
-
+        Ok(LogEmbedding { value: embedding })
     }
 }
 

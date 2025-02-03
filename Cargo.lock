@@ -1064,6 +1064,7 @@ dependencies = [
  "rust-tfidf",
  "serde",
  "serde_json",
+ "uuid",
  "wit-bindgen-rt 0.37.0",
 ]
 
