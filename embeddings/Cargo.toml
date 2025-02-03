@@ -9,6 +9,12 @@ path = "wit-generated"
 [package.metadata.component.target.dependencies."rag:embeddings-exports"]
 path = "wit-generated/deps/rag_embeddings-exports"
 
+[dependencies.golem-rust]
+version = "1.2.1"
+
+[dependencies]
+reqwest = { git = "https://github.com/zivergetech/reqwest", branch = "update-jun-2024", features = ["json"] }
+
 [dependencies.wit-bindgen-rt]
 version = "0.37.0"
 features = ["bitflags"]

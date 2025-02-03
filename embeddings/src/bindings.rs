@@ -14,7 +14,7 @@ pub mod exports {
                 use super::super::super::super::_rt;
                 #[derive(Clone)]
                 pub struct LogEmbedding {
-                    pub value: _rt::Vec<_rt::Vec<f32>>,
+                    pub value: _rt::Vec<f32>,
                 }
                 impl ::core::fmt::Debug for LogEmbedding {
                     fn fmt(
@@ -41,43 +41,21 @@ pub mod exports {
                         Ok(e) => {
                             *ptr2.add(0).cast::<u8>() = (0i32) as u8;
                             let LogEmbedding { value: value3 } = e;
-                            let vec5 = value3;
-                            let len5 = vec5.len();
-                            let layout5 = _rt::alloc::Layout::from_size_align_unchecked(
-                                vec5.len() * 8,
-                                4,
-                            );
-                            let result5 = if layout5.size() != 0 {
-                                let ptr = _rt::alloc::alloc(layout5).cast::<u8>();
-                                if ptr.is_null() {
-                                    _rt::alloc::handle_alloc_error(layout5);
-                                }
-                                ptr
-                            } else {
-                                ::core::ptr::null_mut()
-                            };
-                            for (i, e) in vec5.into_iter().enumerate() {
-                                let base = result5.add(i * 8);
-                                {
-                                    let vec4 = (e).into_boxed_slice();
-                                    let ptr4 = vec4.as_ptr().cast::<u8>();
-                                    let len4 = vec4.len();
-                                    ::core::mem::forget(vec4);
-                                    *base.add(4).cast::<usize>() = len4;
-                                    *base.add(0).cast::<*mut u8>() = ptr4.cast_mut();
-                                }
-                            }
-                            *ptr2.add(8).cast::<usize>() = len5;
-                            *ptr2.add(4).cast::<*mut u8>() = result5;
+                            let vec4 = (value3).into_boxed_slice();
+                            let ptr4 = vec4.as_ptr().cast::<u8>();
+                            let len4 = vec4.len();
+                            ::core::mem::forget(vec4);
+                            *ptr2.add(8).cast::<usize>() = len4;
+                            *ptr2.add(4).cast::<*mut u8>() = ptr4.cast_mut();
                         }
                         Err(e) => {
                             *ptr2.add(0).cast::<u8>() = (1i32) as u8;
-                            let vec6 = (e.into_bytes()).into_boxed_slice();
-                            let ptr6 = vec6.as_ptr().cast::<u8>();
-                            let len6 = vec6.len();
-                            ::core::mem::forget(vec6);
-                            *ptr2.add(8).cast::<usize>() = len6;
-                            *ptr2.add(4).cast::<*mut u8>() = ptr6.cast_mut();
+                            let vec5 = (e.into_bytes()).into_boxed_slice();
+                            let ptr5 = vec5.as_ptr().cast::<u8>();
+                            let len5 = vec5.len();
+                            ::core::mem::forget(vec5);
+                            *ptr2.add(8).cast::<usize>() = len5;
+                            *ptr2.add(4).cast::<*mut u8>() = ptr5.cast_mut();
                         }
                     };
                     ptr2
@@ -90,24 +68,14 @@ pub mod exports {
                         0 => {
                             let l1 = *arg0.add(4).cast::<*mut u8>();
                             let l2 = *arg0.add(8).cast::<usize>();
-                            let base6 = l1;
-                            let len6 = l2;
-                            for i in 0..len6 {
-                                let base = base6.add(i * 8);
-                                {
-                                    let l3 = *base.add(0).cast::<*mut u8>();
-                                    let l4 = *base.add(4).cast::<usize>();
-                                    let base5 = l3;
-                                    let len5 = l4;
-                                    _rt::cabi_dealloc(base5, len5 * 4, 4);
-                                }
-                            }
-                            _rt::cabi_dealloc(base6, len6 * 8, 4);
+                            let base3 = l1;
+                            let len3 = l2;
+                            _rt::cabi_dealloc(base3, len3 * 4, 4);
                         }
                         _ => {
-                            let l7 = *arg0.add(4).cast::<*mut u8>();
-                            let l8 = *arg0.add(8).cast::<usize>();
-                            _rt::cabi_dealloc(l7, l8, 1);
+                            let l4 = *arg0.add(4).cast::<*mut u8>();
+                            let l5 = *arg0.add(8).cast::<usize>();
+                            _rt::cabi_dealloc(l4, l5, 1);
                         }
                     }
                 }
@@ -156,7 +124,6 @@ mod _rt {
             String::from_utf8_unchecked(bytes)
         }
     }
-    pub use alloc_crate::alloc;
     pub unsafe fn cabi_dealloc(ptr: *mut u8, size: usize, align: usize) {
         if size == 0 {
             return;
@@ -166,6 +133,7 @@ mod _rt {
     }
     pub use alloc_crate::string::String;
     extern crate alloc as alloc_crate;
+    pub use alloc_crate::alloc;
 }
 /// Generates `#[no_mangle]` functions to export the specified type as the
 /// root implementation of all generated traits.
@@ -200,13 +168,13 @@ pub(crate) use __export_embeddings_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.36.0:rag:embeddings:embeddings:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 272] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x8f\x01\x01A\x02\x01\
-A\x02\x01B\x07\x01pv\x01p\0\x01r\x01\x05value\x01\x04\0\x0dlog-embedding\x03\0\x02\
-\x01j\x01\x03\x01s\x01@\x01\x03logs\0\x04\x04\0\x11get-log-embedding\x01\x05\x04\
-\0\x1arag:embeddings-exports/api\x05\0\x04\0\x19rag:embeddings/embeddings\x04\0\x0b\
-\x10\x01\0\x0aembeddings\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-\
-component\x070.220.0\x10wit-bindgen-rust\x060.36.0";
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 269] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x8c\x01\x01A\x02\x01\
+A\x02\x01B\x06\x01pv\x01r\x01\x05value\0\x04\0\x0dlog-embedding\x03\0\x01\x01j\x01\
+\x02\x01s\x01@\x01\x03logs\0\x03\x04\0\x11get-log-embedding\x01\x04\x04\0\x1arag\
+:embeddings-exports/api\x05\0\x04\0\x19rag:embeddings/embeddings\x04\0\x0b\x10\x01\
+\0\x0aembeddings\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-componen\
+t\x070.220.0\x10wit-bindgen-rust\x060.36.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

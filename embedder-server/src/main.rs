@@ -48,7 +48,7 @@ async fn main() -> std::io::Result<()> {
     });
 
     println!("Server running at http://127.0.0.1:8089");
-    
+
     HttpServer::new(move || {
         App::new()
             .app_data(app_state.clone()) // Share the state
