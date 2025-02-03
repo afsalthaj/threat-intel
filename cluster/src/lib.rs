@@ -54,7 +54,9 @@ impl Guest for Component {
                 let llm_worker_id = Uuid::new_v4();
 
                 // To be replaced
-                let component_id = "llm_component_id".to_string();
+                let component_id = std::env::var("LLM_COMPONENT_ID").expect(
+                    "LLM_COMPONENT_ID not in the env"
+                );
 
                 let llm_component_id = Uri {
                     value: format!("urn:worker:{component_id}/{}", &llm_worker_id),

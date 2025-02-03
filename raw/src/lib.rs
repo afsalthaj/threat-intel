@@ -64,11 +64,14 @@ impl Guest for Component {
             // for kmeans if things are working
             let centroid_worker_id = "centroid".to_string();
 
+
             // To be replaced
-            let component_id = "centroid_component_id".to_string();
+            let component_id_of_centroid = std::env::var("CENTROID_COMPONENT_ID").expect(
+                "CENTROID_COMPONENT_ID not in the env"
+            );
 
             let centroid_uri = Uri {
-                value: format!("urn:worker:{component_id}/{}", &centroid_worker_id),
+                value: format!("urn:worker:{component_id_of_centroid}/{}", &centroid_worker_id),
             };
 
             let api = CentroidApi::new(&centroid_uri);
@@ -112,7 +115,9 @@ impl Guest for Component {
                             // This can be any worker. It is kept as a separate worker
                             // since I am not entirely sure the best way to embed
                             let embedder_worker = Uuid::new_v4().to_string();
-                            let component_id_of_embedder = "embedder_component_id".to_string();
+                            let component_id_of_embedder = std::env::var("EMBEDDER_COMPONENT_ID").expect(
+                                "EMBEDDER_COMPONENT_ID not in the env"
+                            );
 
                             let embedder_uri = Uri {
                                 value: format!(
@@ -127,7 +132,10 @@ impl Guest for Component {
                                 &feature_vector_and_log.1.clone().message,
                             )?;
 
-                            let component_id_of_cluster = "cluster".to_string();
+                            let component_id_of_cluster = std::env::var("CLUSTER_COMPONENT_ID").expect(
+                                "CLUSTER_COMPONENT_ID not in the env"
+                            );
+
                             let cluster_worker_name = format!("cluster_{}", cluster);
 
                             let cluster_uri = Uri {
