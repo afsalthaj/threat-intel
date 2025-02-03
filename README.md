@@ -1,4 +1,4 @@
-### Security Threat Intelligence with Golem, leveraging RAG and LLMA
+# Security Threat Intelligence with Golem, leveraging RAG and LLMA
 
 ### Example of a Unique Golem Workflow (Without SIEM Involvement):
 
