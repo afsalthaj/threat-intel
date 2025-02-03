@@ -145,7 +145,7 @@ impl Guest for Component {
                             };
 
                             let _ = api.blocking_process_cluster_input(&cluster_input);
-                            println!("The log has been sent to a threat cluster")
+                            println!("The log has been sent to a threat cluster");
 
                             state.token_counts.clear();
                             state.batch_logs.clear();
