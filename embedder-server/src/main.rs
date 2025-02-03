@@ -32,8 +32,6 @@ async fn get_log_embedding(
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("Server running at http://127.0.0.1:8089");
-
     // Load the model once when starting the server
     let model = task::spawn_blocking(move || {
         SentenceEmbeddingsBuilder::remote(SentenceEmbeddingsModelType::AllMiniLmL6V2)
@@ -49,6 +47,8 @@ async fn main() -> std::io::Result<()> {
         model: Arc::new(Mutex::new(model)),
     });
 
+    println!("Server running at http://127.0.0.1:8089");
+    
     HttpServer::new(move || {
         App::new()
             .app_data(app_state.clone()) // Share the state
