@@ -4249,6 +4249,20 @@ pub mod exports {
                 static __FORCE_SECTION_REF: fn() = super::super::super::super::__link_custom_section_describing_imports;
                 use super::super::super::super::_rt;
                 #[derive(Clone)]
+                pub struct AlertMessage {
+                    pub value: _rt::String,
+                }
+                impl ::core::fmt::Debug for AlertMessage {
+                    fn fmt(
+                        &self,
+                        f: &mut ::core::fmt::Formatter<'_>,
+                    ) -> ::core::fmt::Result {
+                        f.debug_struct("AlertMessage")
+                            .field("value", &self.value)
+                            .finish()
+                    }
+                }
+                #[derive(Clone)]
                 pub struct ClusterInput {
                     pub log_line: _rt::String,
                     pub embedding: _rt::Vec<f32>,
@@ -4273,43 +4287,44 @@ pub mod exports {
                     match result0 {
                         Ok(e) => {
                             *ptr1.add(0).cast::<u8>() = (0i32) as u8;
-                            let vec3 = e;
-                            let len3 = vec3.len();
-                            let layout3 = _rt::alloc::Layout::from_size_align_unchecked(
-                                vec3.len() * 8,
+                            let vec4 = e;
+                            let len4 = vec4.len();
+                            let layout4 = _rt::alloc::Layout::from_size_align_unchecked(
+                                vec4.len() * 8,
                                 4,
                             );
-                            let result3 = if layout3.size() != 0 {
-                                let ptr = _rt::alloc::alloc(layout3).cast::<u8>();
+                            let result4 = if layout4.size() != 0 {
+                                let ptr = _rt::alloc::alloc(layout4).cast::<u8>();
                                 if ptr.is_null() {
-                                    _rt::alloc::handle_alloc_error(layout3);
+                                    _rt::alloc::handle_alloc_error(layout4);
                                 }
                                 ptr
                             } else {
                                 ::core::ptr::null_mut()
                             };
-                            for (i, e) in vec3.into_iter().enumerate() {
-                                let base = result3.add(i * 8);
+                            for (i, e) in vec4.into_iter().enumerate() {
+                                let base = result4.add(i * 8);
                                 {
-                                    let vec2 = (e.into_bytes()).into_boxed_slice();
-                                    let ptr2 = vec2.as_ptr().cast::<u8>();
-                                    let len2 = vec2.len();
-                                    ::core::mem::forget(vec2);
-                                    *base.add(4).cast::<usize>() = len2;
-                                    *base.add(0).cast::<*mut u8>() = ptr2.cast_mut();
+                                    let AlertMessage { value: value2 } = e;
+                                    let vec3 = (value2.into_bytes()).into_boxed_slice();
+                                    let ptr3 = vec3.as_ptr().cast::<u8>();
+                                    let len3 = vec3.len();
+                                    ::core::mem::forget(vec3);
+                                    *base.add(4).cast::<usize>() = len3;
+                                    *base.add(0).cast::<*mut u8>() = ptr3.cast_mut();
                                 }
                             }
-                            *ptr1.add(8).cast::<usize>() = len3;
-                            *ptr1.add(4).cast::<*mut u8>() = result3;
+                            *ptr1.add(8).cast::<usize>() = len4;
+                            *ptr1.add(4).cast::<*mut u8>() = result4;
                         }
                         Err(e) => {
                             *ptr1.add(0).cast::<u8>() = (1i32) as u8;
-                            let vec4 = (e.into_bytes()).into_boxed_slice();
-                            let ptr4 = vec4.as_ptr().cast::<u8>();
-                            let len4 = vec4.len();
-                            ::core::mem::forget(vec4);
-                            *ptr1.add(8).cast::<usize>() = len4;
-                            *ptr1.add(4).cast::<*mut u8>() = ptr4.cast_mut();
+                            let vec5 = (e.into_bytes()).into_boxed_slice();
+                            let ptr5 = vec5.as_ptr().cast::<u8>();
+                            let len5 = vec5.len();
+                            ::core::mem::forget(vec5);
+                            *ptr1.add(8).cast::<usize>() = len5;
+                            *ptr1.add(4).cast::<*mut u8>() = ptr5.cast_mut();
                         }
                     };
                     ptr1
@@ -4361,21 +4376,30 @@ pub mod exports {
                     match result2 {
                         Ok(e) => {
                             *ptr3.add(0).cast::<u8>() = (0i32) as u8;
-                            let vec4 = (e.into_bytes()).into_boxed_slice();
-                            let ptr4 = vec4.as_ptr().cast::<u8>();
-                            let len4 = vec4.len();
-                            ::core::mem::forget(vec4);
-                            *ptr3.add(8).cast::<usize>() = len4;
-                            *ptr3.add(4).cast::<*mut u8>() = ptr4.cast_mut();
+                            match e {
+                                Some(e) => {
+                                    *ptr3.add(4).cast::<u8>() = (1i32) as u8;
+                                    let AlertMessage { value: value4 } = e;
+                                    let vec5 = (value4.into_bytes()).into_boxed_slice();
+                                    let ptr5 = vec5.as_ptr().cast::<u8>();
+                                    let len5 = vec5.len();
+                                    ::core::mem::forget(vec5);
+                                    *ptr3.add(12).cast::<usize>() = len5;
+                                    *ptr3.add(8).cast::<*mut u8>() = ptr5.cast_mut();
+                                }
+                                None => {
+                                    *ptr3.add(4).cast::<u8>() = (0i32) as u8;
+                                }
+                            };
                         }
                         Err(e) => {
                             *ptr3.add(0).cast::<u8>() = (1i32) as u8;
-                            let vec5 = (e.into_bytes()).into_boxed_slice();
-                            let ptr5 = vec5.as_ptr().cast::<u8>();
-                            let len5 = vec5.len();
-                            ::core::mem::forget(vec5);
-                            *ptr3.add(8).cast::<usize>() = len5;
-                            *ptr3.add(4).cast::<*mut u8>() = ptr5.cast_mut();
+                            let vec6 = (e.into_bytes()).into_boxed_slice();
+                            let ptr6 = vec6.as_ptr().cast::<u8>();
+                            let len6 = vec6.len();
+                            ::core::mem::forget(vec6);
+                            *ptr3.add(8).cast::<usize>() = len6;
+                            *ptr3.add(4).cast::<*mut u8>() = ptr6.cast_mut();
                         }
                     };
                     ptr3
@@ -4388,25 +4412,31 @@ pub mod exports {
                     let l0 = i32::from(*arg0.add(0).cast::<u8>());
                     match l0 {
                         0 => {
-                            let l1 = *arg0.add(4).cast::<*mut u8>();
-                            let l2 = *arg0.add(8).cast::<usize>();
-                            _rt::cabi_dealloc(l1, l2, 1);
+                            let l1 = i32::from(*arg0.add(4).cast::<u8>());
+                            match l1 {
+                                0 => {}
+                                _ => {
+                                    let l2 = *arg0.add(8).cast::<*mut u8>();
+                                    let l3 = *arg0.add(12).cast::<usize>();
+                                    _rt::cabi_dealloc(l2, l3, 1);
+                                }
+                            }
                         }
                         _ => {
-                            let l3 = *arg0.add(4).cast::<*mut u8>();
-                            let l4 = *arg0.add(8).cast::<usize>();
-                            _rt::cabi_dealloc(l3, l4, 1);
+                            let l4 = *arg0.add(4).cast::<*mut u8>();
+                            let l5 = *arg0.add(8).cast::<usize>();
+                            _rt::cabi_dealloc(l4, l5, 1);
                         }
                     }
                 }
                 pub trait Guest {
                     fn get_alert_messages() -> Result<
-                        _rt::Vec<_rt::String>,
+                        _rt::Vec<AlertMessage>,
                         _rt::String,
                     >;
                     fn process_cluster_input(
                         log: ClusterInput,
-                    ) -> Result<_rt::String, _rt::String>;
+                    ) -> Result<Option<AlertMessage>, _rt::String>;
                 }
                 #[doc(hidden)]
                 macro_rules! __export_rag_cluster_exports_api_cabi {
@@ -4433,9 +4463,9 @@ pub mod exports {
                 #[doc(hidden)]
                 pub(crate) use __export_rag_cluster_exports_api_cabi;
                 #[repr(align(4))]
-                struct _RetArea([::core::mem::MaybeUninit<u8>; 12]);
+                struct _RetArea([::core::mem::MaybeUninit<u8>; 16]);
                 static mut _RET_AREA: _RetArea = _RetArea(
-                    [::core::mem::MaybeUninit::uninit(); 12],
+                    [::core::mem::MaybeUninit::uninit(); 16],
                 );
             }
         }
@@ -4714,8 +4744,8 @@ pub(crate) use __export_cluster_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.36.0:rag:cluster:cluster:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2682] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xfc\x13\x01A\x02\x01\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2714] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x9c\x14\x01A\x02\x01\
 A\x0f\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\
 \x16[method]pollable.ready\x01\x02\x01@\x01\x04self\x01\x01\0\x04\0\x16[method]p\
 ollable.block\x01\x03\x01p\x01\x01py\x01@\x01\x02in\x04\0\x05\x04\0\x04poll\x01\x06\
@@ -4766,13 +4796,14 @@ prompt\x01B\x1d\x02\x03\x02\x01\x04\x04\0\x0dgolem-rpc-uri\x03\0\0\x02\x03\x02\x
 \0\x12\x04\0\x10[constructor]api\x01\x13\x01h\x0b\x01@\x03\x04self\x14\x06prompt\
 \x09\x07context\x05\0\x0f\x04\0\x1e[method]api.blocking-ask-model\x01\x15\x01i\x0a\
 \x01@\x03\x04self\x14\x06prompt\x09\x07context\x05\0\x16\x04\0\x15[method]api.as\
-k-model\x01\x17\x03\0\x19rag:llm-client/llm-client\x05\x08\x01B\x0a\x01pv\x01r\x02\
-\x08log-lines\x09embedding\0\x04\0\x0dcluster-input\x03\0\x01\x01ps\x01j\x01\x03\
-\x01s\x01@\0\0\x04\x04\0\x12get-alert-messages\x01\x05\x01j\x01s\x01s\x01@\x01\x03\
-log\x02\0\x06\x04\0\x15process-cluster-input\x01\x07\x04\0\x17rag:cluster-export\
-s/api\x05\x09\x04\0\x13rag:cluster/cluster\x04\0\x0b\x0d\x01\0\x07cluster\x03\0\0\
-\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10wit-bind\
-gen-rust\x060.36.0";
+k-model\x01\x17\x03\0\x19rag:llm-client/llm-client\x05\x08\x01B\x0d\x01r\x01\x05\
+values\x04\0\x0dalert-message\x03\0\0\x01pv\x01r\x02\x08log-lines\x09embedding\x02\
+\x04\0\x0dcluster-input\x03\0\x03\x01p\x01\x01j\x01\x05\x01s\x01@\0\0\x06\x04\0\x12\
+get-alert-messages\x01\x07\x01k\x01\x01j\x01\x08\x01s\x01@\x01\x03log\x04\0\x09\x04\
+\0\x15process-cluster-input\x01\x0a\x04\0\x17rag:cluster-exports/api\x05\x09\x04\
+\0\x13rag:cluster/cluster\x04\0\x0b\x0d\x01\0\x07cluster\x03\0\0\0G\x09producers\
+\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10wit-bindgen-rust\x060.36\
+.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

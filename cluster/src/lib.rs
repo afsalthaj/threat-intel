@@ -1,25 +1,30 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
-use crate::bindings::exports::rag::cluster_exports::api::{ClusterInput, Guest};
+use uuid::Uuid;
+use crate::bindings::exports::rag::cluster_exports::api::{AlertMessage, ClusterInput, Guest};
+use crate::bindings::golem::rpc::types::Uri;
+use crate::bindings::rag::llm_client::llm_client::{Api as LlmApi, Context, Prompt};
 
 mod bindings;
 
 struct Component;
 
 impl Guest for Component {
-    fn get_alert_messages() -> Result<Vec<String>, String> {
+    fn get_alert_messages() -> Result<Vec<AlertMessage>, String> {
         STATE.with_borrow_mut(|state| {
             let mut messages = vec![];
 
             for (_, v) in state.alert_messages.clone() {
-                messages.push(v);
+                messages.push(AlertMessage {
+                    value: v
+                });
             }
 
             Ok(messages)
         })
     }
 
-    fn process_cluster_input(log: ClusterInput) -> Result<String, String> {
+    fn process_cluster_input(log: ClusterInput) -> Result<Option<AlertMessage>, String> {
         STATE.with_borrow_mut(|state| {
             let existing_logs = state.log_messages.clone();
             let new_embedding = log.embedding.clone();
@@ -42,11 +47,45 @@ impl Guest for Component {
                 );
             };
 
-            if state.log_messages.len() > 2 {
-                todo!()
-            }
+            // Not sure if this is a good idea - this requires domain level testing
+            // Waiting for more messages in the cluster
+            // may be ok, as we don't filter "risk" vs "safe" messages
+            if state.log_messages.len() > 10 {
+                let llm_worker_id = Uuid::new_v4();
 
-            Ok("Found".to_string())
+                // To be replaced
+                let component_id = "llm_component_id".to_string();
+
+                let llm_component_id = Uri {
+                    value: format!("urn:worker:{component_id}/{}", &llm_worker_id),
+                };
+
+                let api = LlmApi::new(&llm_component_id);
+
+                let prompt = Prompt {
+                    description: "Find security attack behaviours".to_string()
+                };
+
+                let log_messages = state.log_messages.clone().into_iter().map(|x| x.0).collect::<Vec<_>>();
+
+                let context = Context {
+                    value: log_messages.join(", ")
+                };
+
+                let result = api.blocking_ask_model(&prompt, &context)?;
+
+                state.alert_messages.insert(
+                    log_messages,
+                    result.value.clone()
+                );
+
+                Ok(Some(AlertMessage {
+                    value: result.value
+                }))
+
+            } else {
+                Ok(None)
+            }
         })
     }
 }
@@ -72,7 +111,7 @@ impl State {
 
 thread_local! {
     static STATE: RefCell<State> = RefCell::new(State {
-       log_messages: HashMap::new(),
+        log_messages: HashMap::new(),
         alert_messages: HashMap::new()
     });
 }

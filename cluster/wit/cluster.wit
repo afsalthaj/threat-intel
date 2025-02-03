@@ -7,8 +7,12 @@ interface api {
    embedding: list<f32>
  }
 
-  process-cluster-input: func(log: cluster-input) -> result<string, string>;
-  get-alert-messages: func() -> result<list<string>, string>;
+ record alert-message {
+    value: string
+ }
+
+  process-cluster-input: func(log: cluster-input) -> result<option<alert-message>, string>;
+  get-alert-messages: func() -> result<list<alert-message>, string>;
 }
 
 world cluster {
