@@ -13,6 +13,25 @@ Allows easier log correlation and analysis to find security threats!
 
 ## Components and Responsibilities
 
+### Oversimplified diagram
+
+```shell
+[Incoming Logs]
+       |
+       v
+[Raw Component] --> (Batch Processing & Local Model) --> [Centroid Worker]
+       |                                             |
+       v                                             v
+[Embedder Worker] <-- (Logs to Embeddings)        [Generic Model]
+       |
+       v
+[Cluster Worker] --> (Maintains Context) --> [LLM Worker]
+       |
+       v
+[Alert Generation & Log Correlation]
+
+```
+
 - **Raw Component**
     - Entry point to the pipeline.
     - Responsible for processing incoming logs.
@@ -51,6 +70,7 @@ Allows easier log correlation and analysis to find security threats!
     - Cluster worker keeps track of all alert messages and the collection of log messages, which can be retrieved at any time
     - "It looks like a user tried to log in after 10 attempts from an unknown geolocation."
     - Requests logs of failed attempts, firewall logs, and correlates timestamps.
+
 
 
 
