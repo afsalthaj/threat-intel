@@ -39,12 +39,15 @@ serde_json = "1.0.138"
 
 [dependencies.linfa]
 version = "0.7.1"
+features = ["serde_crate", "serde"]
 
 [dependencies.linfa-clustering]
 version = "0.7.1"
+features = ["serde", "serde_crate"]
 
 [dependencies.linfa-nn]
 version = "0.7.1"
+features = ["serde", "serde_crate"]
 
 [dependencies.ndarray]
 version = "0.15.3"

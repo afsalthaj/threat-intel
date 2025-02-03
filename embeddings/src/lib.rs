@@ -11,7 +11,7 @@ impl Guest for Component {
 
         // Currently hard coded to get something working
         let response: Response = client
-            .post(&format!("http://127.0.0.1:8089/post-example"))
+            .post(&format!("http://127.0.0.1:8089/get_log_embedding"))
             .json(&log)
             .send()
             .expect("Request failed");

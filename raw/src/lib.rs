@@ -4,11 +4,11 @@ use linfa::DatasetBase;
 use linfa_clustering::KMeans;
 use linfa_nn::distance::L2Dist;
 use linfa::prelude::*;
-use ndarray::Array2;
+use ndarray::{Array2, AssignElem};
 use serde::{Deserialize, Serialize};
 use crate::bindings::exports::rag::raw_exports::api::{Guest, LogEvent, Response};
 use crate::bindings::golem::rpc::types::Uri;
-use crate::bindings::rag::llm_client::llm_client::Api;
+use crate::bindings::rag::centroid_client::centroid_client::{Api as CentroidApi, LocalModel};
 
 mod bindings;
 
@@ -50,19 +50,60 @@ impl Guest for Component {
 
             if token_counts.len() == batch_size {
                 state.local_model = Some(streaming_kmeans(&token_counts, &state.batch_logs, state.local_model.clone()));
-
                 token_counts.clear();
                 state.batch_logs.clear();
             }
-        });
 
-        let worker = "well_well";
+            // Currently we don't redistribute further - but we can make more secondary reducers
+            // for kmeans if things are working
+            let centroid_worker_id = "centroid".to_string();
 
-        let component_id = "llm";
-        let uri = Uri { value: format!("urn:worker:{component_id}/{}", &worker) };
+            // To be replaced
+            let component_id = "centroid_component_id".to_string();
 
-        let api = Api::new(&uri);
-        Err("hello".to_string())
+            let centroid_uri = Uri { value: format!("urn:worker:{component_id}/{}", &centroid_worker_id) };
+
+            let api = CentroidApi::new(&centroid_uri);
+
+            let local_model = state.local_model.clone();
+
+            // If local model is ready, try and update the centroid
+            // the general model may not be fully ready yet and in this case, you will get a None
+            if let Some(local_model) = local_model {
+                let serialized = serde_json::to_value(local_model).expect("Unable to serialize").to_string();
+
+                let generic_model_opt = api.blocking_process_local_model(&LocalModel {
+                    value: serialized
+                })?;
+
+                match generic_model_opt {
+                    Some(generic_model) =>  {
+                        // Possibly all the logs in the current worker can now be assigned to specific clusters
+                        let generic_model: KMeans<f64, L2Dist> =
+                            serde_json::from_str(&generic_model.value).map_err(|err| err.to_string())?;
+                    }
+
+                    None => {
+
+                    }
+                }
+
+
+                let response = Response {
+                    detail: "processed and found new category of log".to_string()
+                };
+
+                Ok(response)
+
+            } else {
+                let response = Response {
+                    detail: "processed the log and waiting for new logs for analysis".to_string()
+                };
+
+                Ok(response)
+            }
+
+        })
     }
 }
 
