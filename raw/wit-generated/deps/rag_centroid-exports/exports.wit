@@ -7,7 +7,7 @@ interface api {
   record new-model {
     value: string,
   }
-  process-local-model: func(log: local-model) -> result<option<new-model>, string>;
+  process-local-model: func(log: local-model) -> result<new-model, string>;
 }
 
 interface centroid-inline-functions {}
