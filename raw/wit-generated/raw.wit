@@ -4,6 +4,8 @@ world raw {
   import golem:rpc/types@0.1.1;
   import rag:centroid-client/centroid-client;
   import rag:centroid-exports/api;
+  import rag:cluster-client/cluster-client;
+  import rag:cluster-exports/api;
   import rag:embeddings-client/embeddings-client;
   import rag:embeddings-exports/api;
   import wasi:io/poll@0.2.0;

@@ -2,7 +2,7 @@ package rag:embeddings-exports;
 
 interface api {
   record log-embedding {
-    value: list<list<f32>>,
+    value: list<f32>,
   }
   get-log-embedding: func(log: string) -> result<log-embedding, string>;
 }

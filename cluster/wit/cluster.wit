@@ -1,0 +1,17 @@
+package rag:cluster;
+
+interface api {
+
+ record cluster-input {
+   log-line: string,
+   embedding: list<f32>
+ }
+
+  process-cluster-input: func(log: cluster-input) -> result<string, string>;
+  get-alert-messages: func() -> result<list<string>, string>;
+}
+
+world cluster {
+  export api;
+}
+

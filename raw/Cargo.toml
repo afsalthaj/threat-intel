@@ -15,6 +15,12 @@ path = "wit-generated/deps/rag_centroid-client"
 [package.metadata.component.target.dependencies."rag:centroid-exports"]
 path = "wit-generated/deps/rag_centroid-exports"
 
+[package.metadata.component.target.dependencies."rag:cluster-client"]
+path = "wit-generated/deps/rag_cluster-client"
+
+[package.metadata.component.target.dependencies."rag:cluster-exports"]
+path = "wit-generated/deps/rag_cluster-exports"
+
 [package.metadata.component.target.dependencies."rag:embeddings-client"]
 path = "wit-generated/deps/rag_embeddings-client"
 
@@ -51,6 +57,9 @@ features = ["serde", "serde_crate"]
 
 [dependencies.ndarray]
 version = "0.15.3"
+
+[dependencies.rust-tfidf]
+version = "1.1.0"
 
 [dependencies.serde]
 version = "1.0.217"

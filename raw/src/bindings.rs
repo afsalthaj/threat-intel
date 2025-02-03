@@ -4035,6 +4035,734 @@ pub mod rag {
             }
         }
     }
+    pub mod cluster_client {
+        #[allow(dead_code, clippy::all)]
+        pub mod cluster_client {
+            #[used]
+            #[doc(hidden)]
+            static __FORCE_SECTION_REF: fn() = super::super::super::__link_custom_section_describing_imports;
+            use super::super::super::_rt;
+            pub type GolemRpcUri = super::super::super::golem::rpc::types::Uri;
+            pub type WasiIoPollable = super::super::super::wasi::io::poll::Pollable;
+            pub type ClusterInput = super::super::super::rag::cluster_exports::api::ClusterInput;
+            #[derive(Debug)]
+            #[repr(transparent)]
+            pub struct FutureGetAlertMessagesResult {
+                handle: _rt::Resource<FutureGetAlertMessagesResult>,
+            }
+            impl FutureGetAlertMessagesResult {
+                #[doc(hidden)]
+                pub unsafe fn from_handle(handle: u32) -> Self {
+                    Self {
+                        handle: _rt::Resource::from_handle(handle),
+                    }
+                }
+                #[doc(hidden)]
+                pub fn take_handle(&self) -> u32 {
+                    _rt::Resource::take_handle(&self.handle)
+                }
+                #[doc(hidden)]
+                pub fn handle(&self) -> u32 {
+                    _rt::Resource::handle(&self.handle)
+                }
+            }
+            unsafe impl _rt::WasmResource for FutureGetAlertMessagesResult {
+                #[inline]
+                unsafe fn drop(_handle: u32) {
+                    #[cfg(not(target_arch = "wasm32"))]
+                    unreachable!();
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[resource-drop]future-get-alert-messages-result"]
+                            fn drop(_: u32);
+                        }
+                        drop(_handle);
+                    }
+                }
+            }
+            #[derive(Debug)]
+            #[repr(transparent)]
+            pub struct FutureProcessClusterInputResult {
+                handle: _rt::Resource<FutureProcessClusterInputResult>,
+            }
+            impl FutureProcessClusterInputResult {
+                #[doc(hidden)]
+                pub unsafe fn from_handle(handle: u32) -> Self {
+                    Self {
+                        handle: _rt::Resource::from_handle(handle),
+                    }
+                }
+                #[doc(hidden)]
+                pub fn take_handle(&self) -> u32 {
+                    _rt::Resource::take_handle(&self.handle)
+                }
+                #[doc(hidden)]
+                pub fn handle(&self) -> u32 {
+                    _rt::Resource::handle(&self.handle)
+                }
+            }
+            unsafe impl _rt::WasmResource for FutureProcessClusterInputResult {
+                #[inline]
+                unsafe fn drop(_handle: u32) {
+                    #[cfg(not(target_arch = "wasm32"))]
+                    unreachable!();
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[resource-drop]future-process-cluster-input-result"]
+                            fn drop(_: u32);
+                        }
+                        drop(_handle);
+                    }
+                }
+            }
+            #[derive(Debug)]
+            #[repr(transparent)]
+            pub struct Api {
+                handle: _rt::Resource<Api>,
+            }
+            impl Api {
+                #[doc(hidden)]
+                pub unsafe fn from_handle(handle: u32) -> Self {
+                    Self {
+                        handle: _rt::Resource::from_handle(handle),
+                    }
+                }
+                #[doc(hidden)]
+                pub fn take_handle(&self) -> u32 {
+                    _rt::Resource::take_handle(&self.handle)
+                }
+                #[doc(hidden)]
+                pub fn handle(&self) -> u32 {
+                    _rt::Resource::handle(&self.handle)
+                }
+            }
+            unsafe impl _rt::WasmResource for Api {
+                #[inline]
+                unsafe fn drop(_handle: u32) {
+                    #[cfg(not(target_arch = "wasm32"))]
+                    unreachable!();
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[resource-drop]api"]
+                            fn drop(_: u32);
+                        }
+                        drop(_handle);
+                    }
+                }
+            }
+            impl FutureGetAlertMessagesResult {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn subscribe(&self) -> WasiIoPollable {
+                    unsafe {
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[method]future-get-alert-messages-result.subscribe"]
+                            fn wit_import(_: i32) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import((self).handle() as i32);
+                        super::super::super::wasi::io::poll::Pollable::from_handle(
+                            ret as u32,
+                        )
+                    }
+                }
+            }
+            impl FutureGetAlertMessagesResult {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn get(&self) -> Option<Result<_rt::Vec<_rt::String>, _rt::String>> {
+                    unsafe {
+                        #[repr(align(4))]
+                        struct RetArea([::core::mem::MaybeUninit<u8>; 16]);
+                        let mut ret_area = RetArea(
+                            [::core::mem::MaybeUninit::uninit(); 16],
+                        );
+                        let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[method]future-get-alert-messages-result.get"]
+                            fn wit_import(_: i32, _: *mut u8);
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: *mut u8) {
+                            unreachable!()
+                        }
+                        wit_import((self).handle() as i32, ptr0);
+                        let l1 = i32::from(*ptr0.add(0).cast::<u8>());
+                        match l1 {
+                            0 => None,
+                            1 => {
+                                let e = {
+                                    let l2 = i32::from(*ptr0.add(4).cast::<u8>());
+                                    match l2 {
+                                        0 => {
+                                            let e = {
+                                                let l3 = *ptr0.add(8).cast::<*mut u8>();
+                                                let l4 = *ptr0.add(12).cast::<usize>();
+                                                let base8 = l3;
+                                                let len8 = l4;
+                                                let mut result8 = _rt::Vec::with_capacity(len8);
+                                                for i in 0..len8 {
+                                                    let base = base8.add(i * 8);
+                                                    let e8 = {
+                                                        let l5 = *base.add(0).cast::<*mut u8>();
+                                                        let l6 = *base.add(4).cast::<usize>();
+                                                        let len7 = l6;
+                                                        let bytes7 = _rt::Vec::from_raw_parts(
+                                                            l5.cast(),
+                                                            len7,
+                                                            len7,
+                                                        );
+                                                        _rt::string_lift(bytes7)
+                                                    };
+                                                    result8.push(e8);
+                                                }
+                                                _rt::cabi_dealloc(base8, len8 * 8, 4);
+                                                result8
+                                            };
+                                            Ok(e)
+                                        }
+                                        1 => {
+                                            let e = {
+                                                let l9 = *ptr0.add(8).cast::<*mut u8>();
+                                                let l10 = *ptr0.add(12).cast::<usize>();
+                                                let len11 = l10;
+                                                let bytes11 = _rt::Vec::from_raw_parts(
+                                                    l9.cast(),
+                                                    len11,
+                                                    len11,
+                                                );
+                                                _rt::string_lift(bytes11)
+                                            };
+                                            Err(e)
+                                        }
+                                        _ => _rt::invalid_enum_discriminant(),
+                                    }
+                                };
+                                Some(e)
+                            }
+                            _ => _rt::invalid_enum_discriminant(),
+                        }
+                    }
+                }
+            }
+            impl FutureProcessClusterInputResult {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn subscribe(&self) -> WasiIoPollable {
+                    unsafe {
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[method]future-process-cluster-input-result.subscribe"]
+                            fn wit_import(_: i32) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import((self).handle() as i32);
+                        super::super::super::wasi::io::poll::Pollable::from_handle(
+                            ret as u32,
+                        )
+                    }
+                }
+            }
+            impl FutureProcessClusterInputResult {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn get(&self) -> Option<Result<_rt::String, _rt::String>> {
+                    unsafe {
+                        #[repr(align(4))]
+                        struct RetArea([::core::mem::MaybeUninit<u8>; 16]);
+                        let mut ret_area = RetArea(
+                            [::core::mem::MaybeUninit::uninit(); 16],
+                        );
+                        let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[method]future-process-cluster-input-result.get"]
+                            fn wit_import(_: i32, _: *mut u8);
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: *mut u8) {
+                            unreachable!()
+                        }
+                        wit_import((self).handle() as i32, ptr0);
+                        let l1 = i32::from(*ptr0.add(0).cast::<u8>());
+                        match l1 {
+                            0 => None,
+                            1 => {
+                                let e = {
+                                    let l2 = i32::from(*ptr0.add(4).cast::<u8>());
+                                    match l2 {
+                                        0 => {
+                                            let e = {
+                                                let l3 = *ptr0.add(8).cast::<*mut u8>();
+                                                let l4 = *ptr0.add(12).cast::<usize>();
+                                                let len5 = l4;
+                                                let bytes5 = _rt::Vec::from_raw_parts(
+                                                    l3.cast(),
+                                                    len5,
+                                                    len5,
+                                                );
+                                                _rt::string_lift(bytes5)
+                                            };
+                                            Ok(e)
+                                        }
+                                        1 => {
+                                            let e = {
+                                                let l6 = *ptr0.add(8).cast::<*mut u8>();
+                                                let l7 = *ptr0.add(12).cast::<usize>();
+                                                let len8 = l7;
+                                                let bytes8 = _rt::Vec::from_raw_parts(
+                                                    l6.cast(),
+                                                    len8,
+                                                    len8,
+                                                );
+                                                _rt::string_lift(bytes8)
+                                            };
+                                            Err(e)
+                                        }
+                                        _ => _rt::invalid_enum_discriminant(),
+                                    }
+                                };
+                                Some(e)
+                            }
+                            _ => _rt::invalid_enum_discriminant(),
+                        }
+                    }
+                }
+            }
+            impl Api {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn new(location: &GolemRpcUri) -> Self {
+                    unsafe {
+                        let super::super::super::golem::rpc::types::Uri {
+                            value: value0,
+                        } = location;
+                        let vec1 = value0;
+                        let ptr1 = vec1.as_ptr().cast::<u8>();
+                        let len1 = vec1.len();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[constructor]api"]
+                            fn wit_import(_: *mut u8, _: usize) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: *mut u8, _: usize) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import(ptr1.cast_mut(), len1);
+                        Api::from_handle(ret as u32)
+                    }
+                }
+            }
+            impl Api {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn blocking_get_alert_messages(
+                    &self,
+                ) -> Result<_rt::Vec<_rt::String>, _rt::String> {
+                    unsafe {
+                        #[repr(align(4))]
+                        struct RetArea([::core::mem::MaybeUninit<u8>; 12]);
+                        let mut ret_area = RetArea(
+                            [::core::mem::MaybeUninit::uninit(); 12],
+                        );
+                        let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[method]api.blocking-get-alert-messages"]
+                            fn wit_import(_: i32, _: *mut u8);
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: *mut u8) {
+                            unreachable!()
+                        }
+                        wit_import((self).handle() as i32, ptr0);
+                        let l1 = i32::from(*ptr0.add(0).cast::<u8>());
+                        match l1 {
+                            0 => {
+                                let e = {
+                                    let l2 = *ptr0.add(4).cast::<*mut u8>();
+                                    let l3 = *ptr0.add(8).cast::<usize>();
+                                    let base7 = l2;
+                                    let len7 = l3;
+                                    let mut result7 = _rt::Vec::with_capacity(len7);
+                                    for i in 0..len7 {
+                                        let base = base7.add(i * 8);
+                                        let e7 = {
+                                            let l4 = *base.add(0).cast::<*mut u8>();
+                                            let l5 = *base.add(4).cast::<usize>();
+                                            let len6 = l5;
+                                            let bytes6 = _rt::Vec::from_raw_parts(
+                                                l4.cast(),
+                                                len6,
+                                                len6,
+                                            );
+                                            _rt::string_lift(bytes6)
+                                        };
+                                        result7.push(e7);
+                                    }
+                                    _rt::cabi_dealloc(base7, len7 * 8, 4);
+                                    result7
+                                };
+                                Ok(e)
+                            }
+                            1 => {
+                                let e = {
+                                    let l8 = *ptr0.add(4).cast::<*mut u8>();
+                                    let l9 = *ptr0.add(8).cast::<usize>();
+                                    let len10 = l9;
+                                    let bytes10 = _rt::Vec::from_raw_parts(
+                                        l8.cast(),
+                                        len10,
+                                        len10,
+                                    );
+                                    _rt::string_lift(bytes10)
+                                };
+                                Err(e)
+                            }
+                            _ => _rt::invalid_enum_discriminant(),
+                        }
+                    }
+                }
+            }
+            impl Api {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn get_alert_messages(&self) -> FutureGetAlertMessagesResult {
+                    unsafe {
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[method]api.get-alert-messages"]
+                            fn wit_import(_: i32) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import((self).handle() as i32);
+                        FutureGetAlertMessagesResult::from_handle(ret as u32)
+                    }
+                }
+            }
+            impl Api {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn blocking_process_cluster_input(
+                    &self,
+                    log: &ClusterInput,
+                ) -> Result<_rt::String, _rt::String> {
+                    unsafe {
+                        #[repr(align(4))]
+                        struct RetArea([::core::mem::MaybeUninit<u8>; 12]);
+                        let mut ret_area = RetArea(
+                            [::core::mem::MaybeUninit::uninit(); 12],
+                        );
+                        let super::super::super::rag::cluster_exports::api::ClusterInput {
+                            log_line: log_line0,
+                            embedding: embedding0,
+                        } = log;
+                        let vec1 = log_line0;
+                        let ptr1 = vec1.as_ptr().cast::<u8>();
+                        let len1 = vec1.len();
+                        let vec2 = embedding0;
+                        let ptr2 = vec2.as_ptr().cast::<u8>();
+                        let len2 = vec2.len();
+                        let ptr3 = ret_area.0.as_mut_ptr().cast::<u8>();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[method]api.blocking-process-cluster-input"]
+                            fn wit_import(
+                                _: i32,
+                                _: *mut u8,
+                                _: usize,
+                                _: *mut u8,
+                                _: usize,
+                                _: *mut u8,
+                            );
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(
+                            _: i32,
+                            _: *mut u8,
+                            _: usize,
+                            _: *mut u8,
+                            _: usize,
+                            _: *mut u8,
+                        ) {
+                            unreachable!()
+                        }
+                        wit_import(
+                            (self).handle() as i32,
+                            ptr1.cast_mut(),
+                            len1,
+                            ptr2.cast_mut(),
+                            len2,
+                            ptr3,
+                        );
+                        let l4 = i32::from(*ptr3.add(0).cast::<u8>());
+                        match l4 {
+                            0 => {
+                                let e = {
+                                    let l5 = *ptr3.add(4).cast::<*mut u8>();
+                                    let l6 = *ptr3.add(8).cast::<usize>();
+                                    let len7 = l6;
+                                    let bytes7 = _rt::Vec::from_raw_parts(
+                                        l5.cast(),
+                                        len7,
+                                        len7,
+                                    );
+                                    _rt::string_lift(bytes7)
+                                };
+                                Ok(e)
+                            }
+                            1 => {
+                                let e = {
+                                    let l8 = *ptr3.add(4).cast::<*mut u8>();
+                                    let l9 = *ptr3.add(8).cast::<usize>();
+                                    let len10 = l9;
+                                    let bytes10 = _rt::Vec::from_raw_parts(
+                                        l8.cast(),
+                                        len10,
+                                        len10,
+                                    );
+                                    _rt::string_lift(bytes10)
+                                };
+                                Err(e)
+                            }
+                            _ => _rt::invalid_enum_discriminant(),
+                        }
+                    }
+                }
+            }
+            impl Api {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn process_cluster_input(
+                    &self,
+                    log: &ClusterInput,
+                ) -> FutureProcessClusterInputResult {
+                    unsafe {
+                        let super::super::super::rag::cluster_exports::api::ClusterInput {
+                            log_line: log_line0,
+                            embedding: embedding0,
+                        } = log;
+                        let vec1 = log_line0;
+                        let ptr1 = vec1.as_ptr().cast::<u8>();
+                        let len1 = vec1.len();
+                        let vec2 = embedding0;
+                        let ptr2 = vec2.as_ptr().cast::<u8>();
+                        let len2 = vec2.len();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "rag:cluster-client/cluster-client")]
+                        extern "C" {
+                            #[link_name = "[method]api.process-cluster-input"]
+                            fn wit_import(
+                                _: i32,
+                                _: *mut u8,
+                                _: usize,
+                                _: *mut u8,
+                                _: usize,
+                            ) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(
+                            _: i32,
+                            _: *mut u8,
+                            _: usize,
+                            _: *mut u8,
+                            _: usize,
+                        ) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import(
+                            (self).handle() as i32,
+                            ptr1.cast_mut(),
+                            len1,
+                            ptr2.cast_mut(),
+                            len2,
+                        );
+                        FutureProcessClusterInputResult::from_handle(ret as u32)
+                    }
+                }
+            }
+        }
+    }
+    pub mod cluster_exports {
+        #[allow(dead_code, clippy::all)]
+        pub mod api {
+            #[used]
+            #[doc(hidden)]
+            static __FORCE_SECTION_REF: fn() = super::super::super::__link_custom_section_describing_imports;
+            use super::super::super::_rt;
+            #[derive(Clone)]
+            pub struct ClusterInput {
+                pub log_line: _rt::String,
+                pub embedding: _rt::Vec<f32>,
+            }
+            impl ::core::fmt::Debug for ClusterInput {
+                fn fmt(
+                    &self,
+                    f: &mut ::core::fmt::Formatter<'_>,
+                ) -> ::core::fmt::Result {
+                    f.debug_struct("ClusterInput")
+                        .field("log-line", &self.log_line)
+                        .field("embedding", &self.embedding)
+                        .finish()
+                }
+            }
+            #[allow(unused_unsafe, clippy::all)]
+            pub fn get_alert_messages() -> Result<_rt::Vec<_rt::String>, _rt::String> {
+                unsafe {
+                    #[repr(align(4))]
+                    struct RetArea([::core::mem::MaybeUninit<u8>; 12]);
+                    let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 12]);
+                    let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
+                    #[cfg(target_arch = "wasm32")]
+                    #[link(wasm_import_module = "rag:cluster-exports/api")]
+                    extern "C" {
+                        #[link_name = "get-alert-messages"]
+                        fn wit_import(_: *mut u8);
+                    }
+                    #[cfg(not(target_arch = "wasm32"))]
+                    fn wit_import(_: *mut u8) {
+                        unreachable!()
+                    }
+                    wit_import(ptr0);
+                    let l1 = i32::from(*ptr0.add(0).cast::<u8>());
+                    match l1 {
+                        0 => {
+                            let e = {
+                                let l2 = *ptr0.add(4).cast::<*mut u8>();
+                                let l3 = *ptr0.add(8).cast::<usize>();
+                                let base7 = l2;
+                                let len7 = l3;
+                                let mut result7 = _rt::Vec::with_capacity(len7);
+                                for i in 0..len7 {
+                                    let base = base7.add(i * 8);
+                                    let e7 = {
+                                        let l4 = *base.add(0).cast::<*mut u8>();
+                                        let l5 = *base.add(4).cast::<usize>();
+                                        let len6 = l5;
+                                        let bytes6 = _rt::Vec::from_raw_parts(
+                                            l4.cast(),
+                                            len6,
+                                            len6,
+                                        );
+                                        _rt::string_lift(bytes6)
+                                    };
+                                    result7.push(e7);
+                                }
+                                _rt::cabi_dealloc(base7, len7 * 8, 4);
+                                result7
+                            };
+                            Ok(e)
+                        }
+                        1 => {
+                            let e = {
+                                let l8 = *ptr0.add(4).cast::<*mut u8>();
+                                let l9 = *ptr0.add(8).cast::<usize>();
+                                let len10 = l9;
+                                let bytes10 = _rt::Vec::from_raw_parts(
+                                    l8.cast(),
+                                    len10,
+                                    len10,
+                                );
+                                _rt::string_lift(bytes10)
+                            };
+                            Err(e)
+                        }
+                        _ => _rt::invalid_enum_discriminant(),
+                    }
+                }
+            }
+            #[allow(unused_unsafe, clippy::all)]
+            pub fn process_cluster_input(
+                log: &ClusterInput,
+            ) -> Result<_rt::String, _rt::String> {
+                unsafe {
+                    #[repr(align(4))]
+                    struct RetArea([::core::mem::MaybeUninit<u8>; 12]);
+                    let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 12]);
+                    let ClusterInput { log_line: log_line0, embedding: embedding0 } = log;
+                    let vec1 = log_line0;
+                    let ptr1 = vec1.as_ptr().cast::<u8>();
+                    let len1 = vec1.len();
+                    let vec2 = embedding0;
+                    let ptr2 = vec2.as_ptr().cast::<u8>();
+                    let len2 = vec2.len();
+                    let ptr3 = ret_area.0.as_mut_ptr().cast::<u8>();
+                    #[cfg(target_arch = "wasm32")]
+                    #[link(wasm_import_module = "rag:cluster-exports/api")]
+                    extern "C" {
+                        #[link_name = "process-cluster-input"]
+                        fn wit_import(
+                            _: *mut u8,
+                            _: usize,
+                            _: *mut u8,
+                            _: usize,
+                            _: *mut u8,
+                        );
+                    }
+                    #[cfg(not(target_arch = "wasm32"))]
+                    fn wit_import(
+                        _: *mut u8,
+                        _: usize,
+                        _: *mut u8,
+                        _: usize,
+                        _: *mut u8,
+                    ) {
+                        unreachable!()
+                    }
+                    wit_import(ptr1.cast_mut(), len1, ptr2.cast_mut(), len2, ptr3);
+                    let l4 = i32::from(*ptr3.add(0).cast::<u8>());
+                    match l4 {
+                        0 => {
+                            let e = {
+                                let l5 = *ptr3.add(4).cast::<*mut u8>();
+                                let l6 = *ptr3.add(8).cast::<usize>();
+                                let len7 = l6;
+                                let bytes7 = _rt::Vec::from_raw_parts(
+                                    l5.cast(),
+                                    len7,
+                                    len7,
+                                );
+                                _rt::string_lift(bytes7)
+                            };
+                            Ok(e)
+                        }
+                        1 => {
+                            let e = {
+                                let l8 = *ptr3.add(4).cast::<*mut u8>();
+                                let l9 = *ptr3.add(8).cast::<usize>();
+                                let len10 = l9;
+                                let bytes10 = _rt::Vec::from_raw_parts(
+                                    l8.cast(),
+                                    len10,
+                                    len10,
+                                );
+                                _rt::string_lift(bytes10)
+                            };
+                            Err(e)
+                        }
+                        _ => _rt::invalid_enum_discriminant(),
+                    }
+                }
+            }
+        }
+    }
     pub mod embeddings_client {
         #[allow(dead_code, clippy::all)]
         pub mod embeddings_client {
@@ -4180,37 +4908,24 @@ pub mod rag {
                                             let e = {
                                                 let l3 = *ptr0.add(8).cast::<*mut u8>();
                                                 let l4 = *ptr0.add(12).cast::<usize>();
-                                                let base8 = l3;
-                                                let len8 = l4;
-                                                let mut result8 = _rt::Vec::with_capacity(len8);
-                                                for i in 0..len8 {
-                                                    let base = base8.add(i * 8);
-                                                    let e8 = {
-                                                        let l5 = *base.add(0).cast::<*mut u8>();
-                                                        let l6 = *base.add(4).cast::<usize>();
-                                                        let len7 = l6;
-                                                        _rt::Vec::from_raw_parts(l5.cast(), len7, len7)
-                                                    };
-                                                    result8.push(e8);
-                                                }
-                                                _rt::cabi_dealloc(base8, len8 * 8, 4);
+                                                let len5 = l4;
                                                 super::super::super::rag::embeddings_exports::api::LogEmbedding {
-                                                    value: result8,
+                                                    value: _rt::Vec::from_raw_parts(l3.cast(), len5, len5),
                                                 }
                                             };
                                             Ok(e)
                                         }
                                         1 => {
                                             let e = {
-                                                let l9 = *ptr0.add(8).cast::<*mut u8>();
-                                                let l10 = *ptr0.add(12).cast::<usize>();
-                                                let len11 = l10;
-                                                let bytes11 = _rt::Vec::from_raw_parts(
-                                                    l9.cast(),
-                                                    len11,
-                                                    len11,
+                                                let l6 = *ptr0.add(8).cast::<*mut u8>();
+                                                let l7 = *ptr0.add(12).cast::<usize>();
+                                                let len8 = l7;
+                                                let bytes8 = _rt::Vec::from_raw_parts(
+                                                    l6.cast(),
+                                                    len8,
+                                                    len8,
                                                 );
-                                                _rt::string_lift(bytes11)
+                                                _rt::string_lift(bytes8)
                                             };
                                             Err(e)
                                         }
@@ -4286,37 +5001,24 @@ pub mod rag {
                                 let e = {
                                     let l3 = *ptr1.add(4).cast::<*mut u8>();
                                     let l4 = *ptr1.add(8).cast::<usize>();
-                                    let base8 = l3;
-                                    let len8 = l4;
-                                    let mut result8 = _rt::Vec::with_capacity(len8);
-                                    for i in 0..len8 {
-                                        let base = base8.add(i * 8);
-                                        let e8 = {
-                                            let l5 = *base.add(0).cast::<*mut u8>();
-                                            let l6 = *base.add(4).cast::<usize>();
-                                            let len7 = l6;
-                                            _rt::Vec::from_raw_parts(l5.cast(), len7, len7)
-                                        };
-                                        result8.push(e8);
-                                    }
-                                    _rt::cabi_dealloc(base8, len8 * 8, 4);
+                                    let len5 = l4;
                                     super::super::super::rag::embeddings_exports::api::LogEmbedding {
-                                        value: result8,
+                                        value: _rt::Vec::from_raw_parts(l3.cast(), len5, len5),
                                     }
                                 };
                                 Ok(e)
                             }
                             1 => {
                                 let e = {
-                                    let l9 = *ptr1.add(4).cast::<*mut u8>();
-                                    let l10 = *ptr1.add(8).cast::<usize>();
-                                    let len11 = l10;
-                                    let bytes11 = _rt::Vec::from_raw_parts(
-                                        l9.cast(),
-                                        len11,
-                                        len11,
+                                    let l6 = *ptr1.add(4).cast::<*mut u8>();
+                                    let l7 = *ptr1.add(8).cast::<usize>();
+                                    let len8 = l7;
+                                    let bytes8 = _rt::Vec::from_raw_parts(
+                                        l6.cast(),
+                                        len8,
+                                        len8,
                                     );
-                                    _rt::string_lift(bytes11)
+                                    _rt::string_lift(bytes8)
                                 };
                                 Err(e)
                             }
@@ -4367,7 +5069,7 @@ pub mod rag {
             use super::super::super::_rt;
             #[derive(Clone)]
             pub struct LogEmbedding {
-                pub value: _rt::Vec<_rt::Vec<f32>>,
+                pub value: _rt::Vec<f32>,
             }
             impl ::core::fmt::Debug for LogEmbedding {
                 fn fmt(
@@ -4404,35 +5106,24 @@ pub mod rag {
                             let e = {
                                 let l3 = *ptr1.add(4).cast::<*mut u8>();
                                 let l4 = *ptr1.add(8).cast::<usize>();
-                                let base8 = l3;
-                                let len8 = l4;
-                                let mut result8 = _rt::Vec::with_capacity(len8);
-                                for i in 0..len8 {
-                                    let base = base8.add(i * 8);
-                                    let e8 = {
-                                        let l5 = *base.add(0).cast::<*mut u8>();
-                                        let l6 = *base.add(4).cast::<usize>();
-                                        let len7 = l6;
-                                        _rt::Vec::from_raw_parts(l5.cast(), len7, len7)
-                                    };
-                                    result8.push(e8);
+                                let len5 = l4;
+                                LogEmbedding {
+                                    value: _rt::Vec::from_raw_parts(l3.cast(), len5, len5),
                                 }
-                                _rt::cabi_dealloc(base8, len8 * 8, 4);
-                                LogEmbedding { value: result8 }
                             };
                             Ok(e)
                         }
                         1 => {
                             let e = {
-                                let l9 = *ptr1.add(4).cast::<*mut u8>();
-                                let l10 = *ptr1.add(8).cast::<usize>();
-                                let len11 = l10;
-                                let bytes11 = _rt::Vec::from_raw_parts(
-                                    l9.cast(),
-                                    len11,
-                                    len11,
+                                let l6 = *ptr1.add(4).cast::<*mut u8>();
+                                let l7 = *ptr1.add(8).cast::<usize>();
+                                let len8 = l7;
+                                let bytes8 = _rt::Vec::from_raw_parts(
+                                    l6.cast(),
+                                    len8,
+                                    len8,
                                 );
-                                _rt::string_lift(bytes11)
+                                _rt::string_lift(bytes8)
                             };
                             Err(e)
                         }
@@ -5472,21 +6163,21 @@ pub(crate) use __export_raw_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.36.0:rag:raw:raw:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 4182] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xdc\x1f\x01A\x02\x01\
-A\x1a\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\
-\x16[method]pollable.ready\x01\x02\x01@\x01\x04self\x01\x01\0\x04\0\x16[method]p\
-ollable.block\x01\x03\x01p\x01\x01py\x01@\x01\x02in\x04\0\x05\x04\0\x04poll\x01\x06\
-\x03\0\x12wasi:io/poll@0.2.0\x05\0\x02\x03\0\0\x08pollable\x01B@\x02\x03\x02\x01\
-\x01\x04\0\x08pollable\x03\0\0\x01z\x04\0\x0anode-index\x03\0\x02\x01w\x04\0\x0b\
-resource-id\x03\0\x04\x01m\x02\x05owned\x08borrowed\x04\0\x0dresource-mode\x03\0\
-\x06\x01o\x02s\x03\x01p\x08\x01k\x03\x01o\x02s\x0a\x01p\x0b\x01ps\x01p\x03\x01o\x02\
-\x0a\x0a\x01o\x02\x05\x07\x01q\x16\x0brecord-type\x01\x09\0\x0cvariant-type\x01\x0c\
-\0\x09enum-type\x01\x0d\0\x0aflags-type\x01\x0d\0\x0atuple-type\x01\x0e\0\x09lis\
-t-type\x01\x03\0\x0boption-type\x01\x03\0\x0bresult-type\x01\x0f\0\x0cprim-u8-ty\
-pe\0\0\x0dprim-u16-type\0\0\x0dprim-u32-type\0\0\x0dprim-u64-type\0\0\x0cprim-s8\
--type\0\0\x0dprim-s16-type\0\0\x0dprim-s32-type\0\0\x0dprim-s64-type\0\0\x0dprim\
--f32-type\0\0\x0dprim-f64-type\0\0\x0eprim-char-type\0\0\x0eprim-bool-type\0\0\x10\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 5108] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xfa&\x01A\x02\x01A\x1f\
+\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\x16[\
+method]pollable.ready\x01\x02\x01@\x01\x04self\x01\x01\0\x04\0\x16[method]pollab\
+le.block\x01\x03\x01p\x01\x01py\x01@\x01\x02in\x04\0\x05\x04\0\x04poll\x01\x06\x03\
+\0\x12wasi:io/poll@0.2.0\x05\0\x02\x03\0\0\x08pollable\x01B@\x02\x03\x02\x01\x01\
+\x04\0\x08pollable\x03\0\0\x01z\x04\0\x0anode-index\x03\0\x02\x01w\x04\0\x0breso\
+urce-id\x03\0\x04\x01m\x02\x05owned\x08borrowed\x04\0\x0dresource-mode\x03\0\x06\
+\x01o\x02s\x03\x01p\x08\x01k\x03\x01o\x02s\x0a\x01p\x0b\x01ps\x01p\x03\x01o\x02\x0a\
+\x0a\x01o\x02\x05\x07\x01q\x16\x0brecord-type\x01\x09\0\x0cvariant-type\x01\x0c\0\
+\x09enum-type\x01\x0d\0\x0aflags-type\x01\x0d\0\x0atuple-type\x01\x0e\0\x09list-\
+type\x01\x03\0\x0boption-type\x01\x03\0\x0bresult-type\x01\x0f\0\x0cprim-u8-type\
+\0\0\x0dprim-u16-type\0\0\x0dprim-u32-type\0\0\x0dprim-u64-type\0\0\x0cprim-s8-t\
+ype\0\0\x0dprim-s16-type\0\0\x0dprim-s32-type\0\0\x0dprim-s64-type\0\0\x0dprim-f\
+32-type\0\0\x0dprim-f64-type\0\0\x0eprim-char-type\0\0\x0eprim-bool-type\0\0\x10\
 prim-string-type\0\0\x0bhandle-type\x01\x10\0\x04\0\x0dwit-type-node\x03\0\x11\x01\
 p\x12\x01r\x01\x05nodes\x13\x04\0\x08wit-type\x03\0\x14\x01r\x01\x05values\x04\0\
 \x03uri\x03\0\x16\x01o\x02y\x0a\x01p\x7f\x01j\x01\x0a\x01\x0a\x01o\x02\x17w\x01q\
@@ -5523,46 +6214,65 @@ method]future-process-local-model-result.get\x01\x10\x01i\x09\x01@\x01\x08locati
 on\x01\0\x11\x04\0\x10[constructor]api\x01\x12\x01h\x09\x01@\x02\x04self\x13\x03\
 log\x05\0\x0e\x04\0([method]api.blocking-process-local-model\x01\x14\x01i\x08\x01\
 @\x02\x04self\x13\x03log\x05\0\x15\x04\0\x1f[method]api.process-local-model\x01\x16\
-\x03\0#rag:centroid-client/centroid-client\x05\x07\x01B\x07\x01pv\x01p\0\x01r\x01\
-\x05value\x01\x04\0\x0dlog-embedding\x03\0\x02\x01j\x01\x03\x01s\x01@\x01\x03log\
-s\0\x04\x04\0\x11get-log-embedding\x01\x05\x03\0\x1arag:embeddings-exports/api\x05\
-\x08\x02\x03\0\x04\x0dlog-embedding\x01B\x19\x02\x03\x02\x01\x04\x04\0\x0dgolem-\
-rpc-uri\x03\0\0\x02\x03\x02\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\x02\x03\x02\
-\x01\x09\x04\0\x0dlog-embedding\x03\0\x04\x04\0\x1ffuture-get-log-embedding-resu\
-lt\x03\x01\x04\0\x03api\x03\x01\x01h\x06\x01i\x03\x01@\x01\x04self\x08\0\x09\x04\
-\01[method]future-get-log-embedding-result.subscribe\x01\x0a\x01j\x01\x05\x01s\x01\
-k\x0b\x01@\x01\x04self\x08\0\x0c\x04\0+[method]future-get-log-embedding-result.g\
-et\x01\x0d\x01i\x07\x01@\x01\x08location\x01\0\x0e\x04\0\x10[constructor]api\x01\
-\x0f\x01h\x07\x01@\x02\x04self\x10\x03logs\0\x0b\x04\0&[method]api.blocking-get-\
-log-embedding\x01\x11\x01i\x06\x01@\x02\x04self\x10\x03logs\0\x12\x04\0\x1d[meth\
-od]api.get-log-embedding\x01\x13\x03\0'rag:embeddings-client/embeddings-client\x05\
-\x0a\x01B\x09\x01r\x01\x05values\x04\0\x07context\x03\0\0\x01r\x01\x05values\x04\
-\0\x0cllm-response\x03\0\x02\x01r\x01\x0bdescriptions\x04\0\x06prompt\x03\0\x04\x01\
-j\x01\x03\x01s\x01@\x02\x06prompt\x05\x07context\x01\0\x06\x04\0\x09ask-model\x01\
-\x07\x03\0\x13rag:llm-exports/api\x05\x0b\x02\x03\0\x06\x07context\x02\x03\0\x06\
-\x0cllm-response\x02\x03\0\x06\x06prompt\x01B\x1d\x02\x03\x02\x01\x04\x04\0\x0dg\
-olem-rpc-uri\x03\0\0\x02\x03\x02\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\x02\
-\x03\x02\x01\x0c\x04\0\x07context\x03\0\x04\x02\x03\x02\x01\x0d\x04\0\x0cllm-res\
-ponse\x03\0\x06\x02\x03\x02\x01\x0e\x04\0\x06prompt\x03\0\x08\x04\0\x17future-as\
-k-model-result\x03\x01\x04\0\x03api\x03\x01\x01h\x0a\x01i\x03\x01@\x01\x04self\x0c\
-\0\x0d\x04\0)[method]future-ask-model-result.subscribe\x01\x0e\x01j\x01\x07\x01s\
-\x01k\x0f\x01@\x01\x04self\x0c\0\x10\x04\0#[method]future-ask-model-result.get\x01\
-\x11\x01i\x0b\x01@\x01\x08location\x01\0\x12\x04\0\x10[constructor]api\x01\x13\x01\
-h\x0b\x01@\x03\x04self\x14\x06prompt\x09\x07context\x05\0\x0f\x04\0\x1e[method]a\
-pi.blocking-ask-model\x01\x15\x01i\x0a\x01@\x03\x04self\x14\x06prompt\x09\x07con\
-text\x05\0\x16\x04\0\x15[method]api.ask-model\x01\x17\x03\0\x19rag:llm-client/ll\
-m-client\x05\x0f\x01B\x16\x01r\x02\x04paths\x04hashs\x04\0\x09file-info\x03\0\0\x01\
-r\x02\x02ips\x08hostnames\x04\0\x09host-info\x03\0\x02\x01r\x01\x07messages\x04\0\
-\x09log-event\x03\0\x04\x01r\x05\x09source-ips\x0edestination-ips\x04port{\x08pr\
-otocols\x06actions\x04\0\x0cnetwork-info\x03\0\x06\x01r\x03\x04names\x03pidy\x04\
-paths\x04\0\x0cprocess-info\x03\0\x08\x01r\x01\x06details\x04\0\x08response\x03\0\
-\x0a\x01r\x02\x08usernames\x04roles\x04\0\x09user-info\x03\0\x0c\x01k\x07\x01k\x09\
-\x01k\x01\x01r\x0a\x09timestamps\x06sources\x0aevent-types\x08severitys\x04host\x03\
-\x04user\x0d\x07network\x0e\x07process\x0f\x04file\x10\x07messages\x04\0\x0esecu\
-rity-event\x03\0\x11\x01j\x01\x0b\x01s\x01@\x01\x03log\x05\0\x13\x04\0\x11proces\
-s-log-event\x01\x14\x04\0\x13rag:raw-exports/api\x05\x10\x04\0\x0brag:raw/raw\x04\
-\0\x0b\x09\x01\0\x03raw\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-c\
-omponent\x070.220.0\x10wit-bindgen-rust\x060.36.0";
+\x03\0#rag:centroid-client/centroid-client\x05\x07\x01B\x0a\x01pv\x01r\x02\x08lo\
+g-lines\x09embedding\0\x04\0\x0dcluster-input\x03\0\x01\x01ps\x01j\x01\x03\x01s\x01\
+@\0\0\x04\x04\0\x12get-alert-messages\x01\x05\x01j\x01s\x01s\x01@\x01\x03log\x02\
+\0\x06\x04\0\x15process-cluster-input\x01\x07\x03\0\x17rag:cluster-exports/api\x05\
+\x08\x02\x03\0\x04\x0dcluster-input\x01B'\x02\x03\x02\x01\x04\x04\0\x0dgolem-rpc\
+-uri\x03\0\0\x02\x03\x02\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\x02\x03\x02\
+\x01\x09\x04\0\x0dcluster-input\x03\0\x04\x04\0\x20future-get-alert-messages-res\
+ult\x03\x01\x04\0#future-process-cluster-input-result\x03\x01\x04\0\x03api\x03\x01\
+\x01h\x06\x01i\x03\x01@\x01\x04self\x09\0\x0a\x04\02[method]future-get-alert-mes\
+sages-result.subscribe\x01\x0b\x01ps\x01j\x01\x0c\x01s\x01k\x0d\x01@\x01\x04self\
+\x09\0\x0e\x04\0,[method]future-get-alert-messages-result.get\x01\x0f\x01h\x07\x01\
+@\x01\x04self\x10\0\x0a\x04\05[method]future-process-cluster-input-result.subscr\
+ibe\x01\x11\x01j\x01s\x01s\x01k\x12\x01@\x01\x04self\x10\0\x13\x04\0/[method]fut\
+ure-process-cluster-input-result.get\x01\x14\x01i\x08\x01@\x01\x08location\x01\0\
+\x15\x04\0\x10[constructor]api\x01\x16\x01h\x08\x01@\x01\x04self\x17\0\x0d\x04\0\
+'[method]api.blocking-get-alert-messages\x01\x18\x01i\x06\x01@\x01\x04self\x17\0\
+\x19\x04\0\x1e[method]api.get-alert-messages\x01\x1a\x01@\x02\x04self\x17\x03log\
+\x05\0\x12\x04\0*[method]api.blocking-process-cluster-input\x01\x1b\x01i\x07\x01\
+@\x02\x04self\x17\x03log\x05\0\x1c\x04\0![method]api.process-cluster-input\x01\x1d\
+\x03\0!rag:cluster-client/cluster-client\x05\x0a\x01B\x06\x01pv\x01r\x01\x05valu\
+e\0\x04\0\x0dlog-embedding\x03\0\x01\x01j\x01\x02\x01s\x01@\x01\x03logs\0\x03\x04\
+\0\x11get-log-embedding\x01\x04\x03\0\x1arag:embeddings-exports/api\x05\x0b\x02\x03\
+\0\x06\x0dlog-embedding\x01B\x19\x02\x03\x02\x01\x04\x04\0\x0dgolem-rpc-uri\x03\0\
+\0\x02\x03\x02\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\x02\x03\x02\x01\x0c\x04\
+\0\x0dlog-embedding\x03\0\x04\x04\0\x1ffuture-get-log-embedding-result\x03\x01\x04\
+\0\x03api\x03\x01\x01h\x06\x01i\x03\x01@\x01\x04self\x08\0\x09\x04\01[method]fut\
+ure-get-log-embedding-result.subscribe\x01\x0a\x01j\x01\x05\x01s\x01k\x0b\x01@\x01\
+\x04self\x08\0\x0c\x04\0+[method]future-get-log-embedding-result.get\x01\x0d\x01\
+i\x07\x01@\x01\x08location\x01\0\x0e\x04\0\x10[constructor]api\x01\x0f\x01h\x07\x01\
+@\x02\x04self\x10\x03logs\0\x0b\x04\0&[method]api.blocking-get-log-embedding\x01\
+\x11\x01i\x06\x01@\x02\x04self\x10\x03logs\0\x12\x04\0\x1d[method]api.get-log-em\
+bedding\x01\x13\x03\0'rag:embeddings-client/embeddings-client\x05\x0d\x01B\x09\x01\
+r\x01\x05values\x04\0\x07context\x03\0\0\x01r\x01\x05values\x04\0\x0cllm-respons\
+e\x03\0\x02\x01r\x01\x0bdescriptions\x04\0\x06prompt\x03\0\x04\x01j\x01\x03\x01s\
+\x01@\x02\x06prompt\x05\x07context\x01\0\x06\x04\0\x09ask-model\x01\x07\x03\0\x13\
+rag:llm-exports/api\x05\x0e\x02\x03\0\x08\x07context\x02\x03\0\x08\x0cllm-respon\
+se\x02\x03\0\x08\x06prompt\x01B\x1d\x02\x03\x02\x01\x04\x04\0\x0dgolem-rpc-uri\x03\
+\0\0\x02\x03\x02\x01\x01\x04\0\x10wasi-io-pollable\x03\0\x02\x02\x03\x02\x01\x0f\
+\x04\0\x07context\x03\0\x04\x02\x03\x02\x01\x10\x04\0\x0cllm-response\x03\0\x06\x02\
+\x03\x02\x01\x11\x04\0\x06prompt\x03\0\x08\x04\0\x17future-ask-model-result\x03\x01\
+\x04\0\x03api\x03\x01\x01h\x0a\x01i\x03\x01@\x01\x04self\x0c\0\x0d\x04\0)[method\
+]future-ask-model-result.subscribe\x01\x0e\x01j\x01\x07\x01s\x01k\x0f\x01@\x01\x04\
+self\x0c\0\x10\x04\0#[method]future-ask-model-result.get\x01\x11\x01i\x0b\x01@\x01\
+\x08location\x01\0\x12\x04\0\x10[constructor]api\x01\x13\x01h\x0b\x01@\x03\x04se\
+lf\x14\x06prompt\x09\x07context\x05\0\x0f\x04\0\x1e[method]api.blocking-ask-mode\
+l\x01\x15\x01i\x0a\x01@\x03\x04self\x14\x06prompt\x09\x07context\x05\0\x16\x04\0\
+\x15[method]api.ask-model\x01\x17\x03\0\x19rag:llm-client/llm-client\x05\x12\x01\
+B\x16\x01r\x02\x04paths\x04hashs\x04\0\x09file-info\x03\0\0\x01r\x02\x02ips\x08h\
+ostnames\x04\0\x09host-info\x03\0\x02\x01r\x01\x07messages\x04\0\x09log-event\x03\
+\0\x04\x01r\x05\x09source-ips\x0edestination-ips\x04port{\x08protocols\x06action\
+s\x04\0\x0cnetwork-info\x03\0\x06\x01r\x03\x04names\x03pidy\x04paths\x04\0\x0cpr\
+ocess-info\x03\0\x08\x01r\x01\x06details\x04\0\x08response\x03\0\x0a\x01r\x02\x08\
+usernames\x04roles\x04\0\x09user-info\x03\0\x0c\x01k\x07\x01k\x09\x01k\x01\x01r\x0a\
+\x09timestamps\x06sources\x0aevent-types\x08severitys\x04host\x03\x04user\x0d\x07\
+network\x0e\x07process\x0f\x04file\x10\x07messages\x04\0\x0esecurity-event\x03\0\
+\x11\x01j\x01\x0b\x01s\x01@\x01\x03log\x05\0\x13\x04\0\x11process-log-event\x01\x14\
+\x04\0\x13rag:raw-exports/api\x05\x13\x04\0\x0brag:raw/raw\x04\0\x0b\x09\x01\0\x03\
+raw\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10\
+wit-bindgen-rust\x060.36.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

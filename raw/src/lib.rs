@@ -4,6 +4,7 @@ use linfa::DatasetBase;
 use linfa_clustering::KMeans;
 use linfa_nn::distance::L2Dist;
 use linfa::prelude::*;
+
 use ndarray::{Array2, AssignElem};
 use serde::{Deserialize, Serialize};
 use crate::bindings::exports::rag::raw_exports::api::{Guest, LogEvent, Response};
@@ -22,15 +23,13 @@ impl Guest for Component {
             let token_index = &mut state.token_index;
             let mut index_counter = state.index_counter;
             let token_counts = &mut state.token_counts;
-
             let batch_size = state.batch_size;
+            state.batch_logs.push(log.clone());
 
             let tokens: Vec<&str> = log.message.split_whitespace().collect();
             let mut feature_vector = vec![0.0; token_index.len()];
 
-            state.batch_logs.push(log.clone());
-            state.log.push(log.clone());
-
+            // Computing sort of a term frequency
             for token in tokens {
                 let token = token.to_lowercase();
                 if !token_index.contains_key(&token) {
@@ -46,7 +45,7 @@ impl Guest for Component {
                 }
             }
 
-            token_counts.push(feature_vector);
+            token_counts.push((feature_vector, log));
 
             if token_counts.len() == batch_size {
                 state.local_model = Some(streaming_kmeans(&token_counts, &state.batch_logs, state.local_model.clone()));
@@ -81,12 +80,32 @@ impl Guest for Component {
                         // Possibly all the logs in the current worker can now be assigned to specific clusters
                         let generic_model: KMeans<f64, L2Dist> =
                             serde_json::from_str(&generic_model.value).map_err(|err| err.to_string())?;
+
+                        // Prepare the token counts as feature vectors
+                        let max_len = token_counts.iter().map(|v| v.0.len()).max().unwrap_or(0);
+                        let mut padded_vectors = token_counts.clone();
+
+                        // Pad vectors to ensure they're all the same length
+                        for vec in &mut padded_vectors {
+                            vec.0.resize(max_len, 0.0);
+                            let single_log_dataset =
+                                DatasetBase::from(Array2::from_shape_vec((1, max_len), vec.0.clone()).unwrap());
+
+                            let cluster = generic_model.predict(&single_log_dataset)[0];
+
+
+
+
+                        }
+
                     }
 
                     None => {
 
                     }
                 }
+
+
 
 
                 let response = Response {
@@ -108,20 +127,20 @@ impl Guest for Component {
 }
 
 fn streaming_kmeans(
-    token_counts: &Vec<Vec<f64>>,
+    token_counts: &Vec<(Vec<f64>, LogEvent)>,
     logs: &Vec<LogEvent>,
     prev_model: Option<KMeans<f64, L2Dist>>
 ) -> KMeans<f64, L2Dist> {
-    let max_len = token_counts.iter().map(|v| v.len()).max().unwrap_or(0);
+    let max_len = token_counts.iter().map(|v| v.0.len()).max().unwrap_or(0);
     let mut padded_vectors = token_counts.clone();
 
     for vec in &mut padded_vectors {
-        vec.resize(max_len, 0.0);
+        vec.0.resize(max_len, 0.0);
     }
 
     let data: Array2<f64> = Array2::from_shape_vec(
         (padded_vectors.len(), max_len),
-        padded_vectors.concat(),
+        padded_vectors.iter().map(|x| x.0.clone()).collect::<Vec<_>>().concat(),
     )
         .unwrap();
 
@@ -146,18 +165,16 @@ fn streaming_kmeans(
 }
 
 struct State {
-    log: Vec<LogEvent>, // This will be cleared and the local model is sent to centroid worker
     token_index: HashMap<String, usize>,
     index_counter: usize,
-    token_counts: Vec<Vec<f64>>,
+    token_counts: Vec<(Vec<f64>, LogEvent)>, // token counts and log messages are stored together
     local_model: Option<KMeans<f64, L2Dist>>,
     batch_size: usize,
-    batch_logs: Vec<LogEvent>
+    batch_logs: Vec<LogEvent> // A subset of the original logs that are going to be used for updating local model
 }
 
 thread_local! {
     static STATE: RefCell<State> = RefCell::new(State {
-        log: vec![], // This will be cleared once the local model is sent to centroid worker
         token_counts: vec![],
         token_index: HashMap::new(),
         local_model: None,

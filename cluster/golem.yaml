@@ -4,15 +4,5 @@
 # yaml-language-server: $schema=https://schema.golem.cloud/app/golem/1.1.1/golem.schema.json
 
 components:
-  raw:
+  cluster:
     template: rust
-dependencies:
-  raw:
-    - type: wasm-rpc
-      target: llm
-    - type: wasm-rpc
-      target: embeddings
-    - type: wasm-rpc
-      target: centroid
-    - type: wasm-rpc
-      target: cluster
