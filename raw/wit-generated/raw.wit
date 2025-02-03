@@ -1,0 +1,10 @@
+package rag:raw;
+
+world raw {
+  import golem:rpc/types@0.1.1;
+  import rag:embeddings-client/embeddings-client;
+  import rag:embeddings-exports/api;
+  import wasi:io/poll@0.2.0;
+  export rag:raw-exports/api;
+  import rag:llm-client/llm-client;
+}

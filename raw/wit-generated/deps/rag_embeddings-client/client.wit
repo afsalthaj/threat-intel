@@ -1,0 +1,20 @@
+package rag:embeddings-client;
+
+interface embeddings-client {
+  use golem:rpc/types@0.1.1.{ uri as golem-rpc-uri };
+  use wasi:io/poll@0.2.0.{ pollable as wasi-io-pollable };
+  use rag:embeddings-exports/api.{ add-threat-response, threat-intel };
+  resource future-add-threat-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<add-threat-response, string>>;
+  }
+  resource api {
+    constructor(location: golem-rpc-uri);
+    blocking-add-threat: func(threat-intel: threat-intel) -> result<add-threat-response, string>;
+    add-threat: func(threat-intel: threat-intel) -> future-add-threat-result;
+  }
+}
+
+world wasm-rpc-client-embeddings {
+  export embeddings-client;
+}

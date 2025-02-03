@@ -1,0 +1,56 @@
+[package]
+name = "raw"
+version = "0.1.0"
+edition = "2021"
+
+[package.metadata.component.target]
+path = "wit-generated"
+
+[package.metadata.component.target.dependencies."golem:rpc"]
+path = "wit-generated/deps/wasm-rpc"
+
+[package.metadata.component.target.dependencies."rag:embeddings-client"]
+path = "wit-generated/deps/rag_embeddings-client"
+
+[package.metadata.component.target.dependencies."rag:embeddings-exports"]
+path = "wit-generated/deps/rag_embeddings-exports"
+
+[package.metadata.component.target.dependencies."rag:llm-client"]
+path = "wit-generated/deps/rag_llm-client"
+
+[package.metadata.component.target.dependencies."rag:llm-exports"]
+path = "wit-generated/deps/rag_llm-exports"
+
+[package.metadata.component.target.dependencies."rag:raw-exports"]
+path = "wit-generated/deps/rag_raw-exports"
+
+[package.metadata.component.target.dependencies."wasi:io"]
+path = "wit-generated/deps/io"
+
+[dependencies]
+regex = "1.11.1"
+
+[dependencies.linfa]
+version = "0.7.1"
+
+[dependencies.linfa-clustering]
+version = "0.7.1"
+
+[dependencies.linfa-nn]
+version = "0.7.1"
+
+[dependencies.ndarray]
+version = "0.15.3"
+
+[dependencies.serde]
+version = "1.0.217"
+features = ["derive"]
+
+[dependencies.wit-bindgen-rt]
+version = "0.37.0"
+features = ["bitflags"]
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+required-features = []

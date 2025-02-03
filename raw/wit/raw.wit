@@ -1,0 +1,61 @@
+package rag:raw;
+
+interface api {
+
+ record log-event {
+   message: string
+ }
+
+ record host-info {
+     ip: string,
+     hostname: string,
+ }
+
+ record user-info {
+     username: string,
+     role: string,
+ }
+
+ record network-info {
+     source-ip: string,
+     destination-ip: string,
+     port: u16,
+     protocol: string,
+     action: string,
+ }
+
+ record process-info {
+     name: string,
+     pid: u32,
+     path: string,
+ }
+
+ record file-info {
+     path: string,
+     hash: string,
+ }
+
+ record security-event {
+     timestamp: string,
+     source: string,
+     event-type: string,
+     severity: string,
+     host: host-info,
+     user: user-info,
+     network: option<network-info>,
+     process: option<process-info>,
+     file: option<file-info>,
+     message: string,
+ }
+
+  record response {
+    detail: string
+  }
+
+  process-log-event: func(log: log-event) -> result<response, string>;
+}
+
+world raw {
+  export api;
+}
+

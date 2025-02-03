@@ -1,0 +1,5 @@
+package rag:embeddings;
+
+world embeddings {
+  export rag:embeddings-exports/api;
+}

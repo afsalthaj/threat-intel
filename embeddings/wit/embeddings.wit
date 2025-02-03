@@ -1,0 +1,19 @@
+package rag:embeddings;
+
+interface api {
+ record threat-intel {
+   id: string,
+   description: string
+ }
+
+ record add-threat-response {
+    description: string
+ }
+
+  add-threat: func(threat-intel: threat-intel) -> result<add-threat-response, string>;
+}
+
+world embeddings {
+  export api;
+}
+

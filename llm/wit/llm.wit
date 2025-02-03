@@ -1,0 +1,22 @@
+package rag:llm;
+
+interface api {
+ record prompt {
+   description: string
+ }
+
+ record context {
+    value: string
+ }
+
+ record llm-response{
+   value: string
+ }
+
+  ask-model: func(prompt: prompt, context: context) -> result<llm-response, string>;
+}
+
+world llm {
+  export api;
+}
+
