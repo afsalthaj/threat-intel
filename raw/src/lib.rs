@@ -115,7 +115,7 @@ impl Guest for Component {
                             // This can be any worker. It is kept as a separate worker
                             // since I am not entirely sure the best way to embed
                             let embedder_worker = Uuid::new_v4().to_string();
-                            let component_id_of_embedder = std::env::var("EMBEDDER_COMPONENT_ID").expect(
+                                let component_id_of_embedder = std::env::var("EMBEDDER_COMPONENT_ID").expect(
                                 "EMBEDDER_COMPONENT_ID not in the env"
                             );
 
