@@ -65,16 +65,20 @@ impl Guest for Component {
             let centroid_worker_id = "centroid".to_string();
 
 
-            // To be replaced
             let component_id_of_centroid = std::env::var("CENTROID_COMPONENT_ID").expect(
                 "CENTROID_COMPONENT_ID not in the env"
             );
 
+            let text = component_id_of_centroid.clone();
+
+            println!("Component ID  {text}");
+            dbg!(component_id_of_centroid.clone());
+
             let centroid_uri = Uri {
-                value: format!("urn:worker:{component_id_of_centroid}/{}", &centroid_worker_id),
+                value: format!("urn:worker:{}/{}", &component_id_of_centroid, &centroid_worker_id),
             };
 
-            let api = CentroidApi::new(&centroid_uri);
+            let centroid_api = CentroidApi::new(&centroid_uri);
 
             let local_model = state.local_model.clone();
 
@@ -86,7 +90,7 @@ impl Guest for Component {
                     .to_string();
 
                 let generic_model_opt =
-                    api.blocking_process_local_model(&LocalModel { value: serialized })?;
+                    centroid_api.blocking_process_local_model(&LocalModel { value: serialized })?;
 
                 match generic_model_opt {
                     Some(generic_model) => {
