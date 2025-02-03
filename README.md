@@ -1,15 +1,79 @@
-# Security Threat Intelligence with Golem, leveraging RAG and LLMA
+# Security Threat Intelligence with Golem with Distributed clustering and RAG with gpt-4
 
-### Example of a Unique Golem Workflow (Without SIEM Involvement):
+### Security Threat
+
+Allows easier log correlation and analysis to find security threats!
 
 * Raw Event Ingestion: Firewall logs, endpoint logs, and DNS traffic are ingested directly into Golem nodes. This can be batch push to predefined set of workers. It doesn't really matter
 * The pre-processor step of structred log-event is skipped in this project
-* Without using a SIEM, a very simple streaming clustering algorithm which is distributed to find centroids of various logs
-* Inform the original workers of these centroids, and then they can be pushed to the centroid workers. 
+* Without using a SIEM ((Security Information and Event Management), a very simple streaming clustering algorithm which is distributed to find centroids of various logs, backed by gpt-4 model with RAG to get proper alert message (after analysis).
+* Cost effective and even more reliable due to reliability on ever-learning models in memory.
 * LLM-Driven Analysis:The LLM analyzes these distributed events and suggests: "This appears to be a brute-force attack followed by privilege escalation and data exfiltration."
 
 
-Log lines example:
+## Components and Responsibilities
+
+- **Raw Component**
+    - Entry point to the pipeline.
+    - Responsible for processing incoming logs.
+    - Maintains internal state:
+        - Batch size.
+        - Local KMeans cluster model (for unsupervised learning).
+        - Batch state.
+    - Updates the local model once the total logs is greater than batch size. We create the model, and the batch is cleared!
+    - If a model is created (local model), it sends the serialized form of this worker to the Centroid Worker.
+    - For every log entry, attempts to send the local model and check for a generic model.
+    - If a generic model is received, finds the membership of all accumulated logs.
+    - Uses the Embedder Worker to convert logs to vector form before sending them to the Cluster Worker.
+
+- **Centroid Worker**
+    - Receives local models from the Raw Component.
+    - Returns a generic model if enough local models are collected.
+    - Facilitates distributed online/streaming KMeans clustering with Golem
+    - This model is simply kept in memory and we keep updating this forever. 
+    - We could also have 2 stages of this pipeline. "Develop" phase where model keeps getting trained and "Deploy" phase where logs will always fall into certain category. Probably not a great idea to develop until tested
+
+- **Embedder Worker**
+    - Converts logs to vector form (embedding).
+    - This internally calls a server that's making use of some native dependencies.
+
+- **Cluster Worker**
+    - Once the raw workers have a generic model, they send the log message as well as the embedded form to the Cluster Worker.
+    - Depending on the model there will be n number of these workers with the name "cluster_1", "cluster_2". Example: john_doe's login attempts, and geolocation and firewall logs will all be collected as part of a cluster.
+    - Maintains previous log messages and their embeddings. This will server as the context for RAG analysis, allowing better inference from LLM model
+    - Connects to the LLM Worker for further processing. LLM worker is kept separate
+
+- **LLM Worker**
+    - Responsible for sending the LLM prompt along with the previous context
+    - Uses Retrieval-Augmented Generation (RAG) to improve the performance of large language models (LLMs) and offset hallucinations.
+
+- **Alert Example**
+    - Cluster worker keeps track of all alert messages and the collection of log messages, which can be retrieved at any time
+    - "It looks like a user tried to log in after 10 attempts from an unknown geolocation."
+    - Requests logs of failed attempts, firewall logs, and correlates timestamps.
+
+
+
+## Workflow Summary
+
+The Raw component, or rather the entry point to this pipeline, is responsible for processing incoming logs.
+
+It keeps an internal state of "batch size," a local KMeans cluster model (for unsupervised learning), and, once the batch size is set, it will keep updating the model.
+
+Meanwhile, it sends the details to a centroid worker, which receives this local model. This may or may not return a generic model. This is the place where we have the distributed online/streaming KMeans clustering.
+
+A generic model will be created only if there are enough local models reaching the centroid worker. For every log entry in the raw worker, it will try to send the local model and see if it gets a generic model.
+
+Both the local model state and generic model state, along with the batch state, are preserved and don't need any external data structure, as Golem is reliable.
+
+If the addition of a log in the raw worker gets a generic model as part of the process, it tries to find the membership of all the logs accumulated until then in the raw node. For example, log 1 corresponds to cluster 1, and log 2 to cluster 2, and so on. Before it sends, it gets a vector form using the embedder server (which has some native dependencies) through the embedder worker. This means it talks to an embedder worker for each of these logs and then sends them to the cluster worker. Depending on the grouping, there will be many clusters.
+
+The cluster keeps track of the previous log messages that are part of the cluster, along with their embeddings, and then connects to a worker called LLM, which is responsible for sending the LLM prompt. Since we are accumulating context, the prompt is more of a Retrieval-Augmented Generation (RAG), an AI architecture that improves the performance of large language models (LLMs) and offsets hallucinations of the model.
+
+If there is an alert like "It looks like a user tried to log in after 10 attempts from an unknown geolocation," this requests the logs of failed attempts, firewall logs, and some correlation of timestamps.
+
+
+## Log lines example:
 
 ### Succesful Login
 
