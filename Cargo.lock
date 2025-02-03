@@ -740,6 +740,9 @@ checksum = "4ee93343901ab17bd981295f2cf0026d4ad018c7c31ba84549a4ddbb47a45104"
 name = "llm"
 version = "0.1.0"
 dependencies = [
+ "golem-rust",
+ "reqwest",
+ "serde_json",
  "wit-bindgen-rt 0.37.0",
 ]
 
