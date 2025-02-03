@@ -10,10 +10,10 @@ interface api {
    value: string
  }
 
-  process-local-model: func(log: local-model) -> result<new-model, string>;
+  process-local-model: func(log: local-model) -> result<option<new-model>, string>;
 }
 
-world raw {
+world centroid {
   export api;
 }
 

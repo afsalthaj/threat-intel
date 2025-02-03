@@ -1,5 +1,5 @@
 package rag:centroid;
 
-world raw {
+world centroid {
   export rag:centroid-exports/api;
 }

@@ -52,13 +52,21 @@ pub mod exports {
                     match result1 {
                         Ok(e) => {
                             *ptr2.add(0).cast::<u8>() = (0i32) as u8;
-                            let NewModel { value: value3 } = e;
-                            let vec4 = (value3.into_bytes()).into_boxed_slice();
-                            let ptr4 = vec4.as_ptr().cast::<u8>();
-                            let len4 = vec4.len();
-                            ::core::mem::forget(vec4);
-                            *ptr2.add(8).cast::<usize>() = len4;
-                            *ptr2.add(4).cast::<*mut u8>() = ptr4.cast_mut();
+                            match e {
+                                Some(e) => {
+                                    *ptr2.add(4).cast::<u8>() = (1i32) as u8;
+                                    let NewModel { value: value3 } = e;
+                                    let vec4 = (value3.into_bytes()).into_boxed_slice();
+                                    let ptr4 = vec4.as_ptr().cast::<u8>();
+                                    let len4 = vec4.len();
+                                    ::core::mem::forget(vec4);
+                                    *ptr2.add(12).cast::<usize>() = len4;
+                                    *ptr2.add(8).cast::<*mut u8>() = ptr4.cast_mut();
+                                }
+                                None => {
+                                    *ptr2.add(4).cast::<u8>() = (0i32) as u8;
+                                }
+                            };
                         }
                         Err(e) => {
                             *ptr2.add(0).cast::<u8>() = (1i32) as u8;
@@ -80,21 +88,27 @@ pub mod exports {
                     let l0 = i32::from(*arg0.add(0).cast::<u8>());
                     match l0 {
                         0 => {
-                            let l1 = *arg0.add(4).cast::<*mut u8>();
-                            let l2 = *arg0.add(8).cast::<usize>();
-                            _rt::cabi_dealloc(l1, l2, 1);
+                            let l1 = i32::from(*arg0.add(4).cast::<u8>());
+                            match l1 {
+                                0 => {}
+                                _ => {
+                                    let l2 = *arg0.add(8).cast::<*mut u8>();
+                                    let l3 = *arg0.add(12).cast::<usize>();
+                                    _rt::cabi_dealloc(l2, l3, 1);
+                                }
+                            }
                         }
                         _ => {
-                            let l3 = *arg0.add(4).cast::<*mut u8>();
-                            let l4 = *arg0.add(8).cast::<usize>();
-                            _rt::cabi_dealloc(l3, l4, 1);
+                            let l4 = *arg0.add(4).cast::<*mut u8>();
+                            let l5 = *arg0.add(8).cast::<usize>();
+                            _rt::cabi_dealloc(l4, l5, 1);
                         }
                     }
                 }
                 pub trait Guest {
                     fn process_local_model(
                         log: LocalModel,
-                    ) -> Result<NewModel, _rt::String>;
+                    ) -> Result<Option<NewModel>, _rt::String>;
                 }
                 #[doc(hidden)]
                 macro_rules! __export_rag_centroid_exports_api_cabi {
@@ -114,9 +128,9 @@ pub mod exports {
                 #[doc(hidden)]
                 pub(crate) use __export_rag_centroid_exports_api_cabi;
                 #[repr(align(4))]
-                struct _RetArea([::core::mem::MaybeUninit<u8>; 12]);
+                struct _RetArea([::core::mem::MaybeUninit<u8>; 16]);
                 static mut _RET_AREA: _RetArea = _RetArea(
-                    [::core::mem::MaybeUninit::uninit(); 12],
+                    [::core::mem::MaybeUninit::uninit(); 16],
                 );
             }
         }
@@ -165,7 +179,7 @@ mod _rt {
 /// ```
 #[allow(unused_macros)]
 #[doc(hidden)]
-macro_rules! __export_raw_impl {
+macro_rules! __export_centroid_impl {
     ($ty:ident) => {
         self::export!($ty with_types_in self);
     };
@@ -176,17 +190,18 @@ macro_rules! __export_raw_impl {
     };
 }
 #[doc(inline)]
-pub(crate) use __export_raw_impl as export;
+pub(crate) use __export_centroid_impl as export;
 #[cfg(target_arch = "wasm32")]
-#[link_section = "component-type:wit-bindgen:0.36.0:rag:centroid:raw:encoded world"]
+#[link_section = "component-type:wit-bindgen:0.36.0:rag:centroid:centroid:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 273] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x97\x01\x01A\x02\x01\
-A\x02\x01B\x07\x01r\x01\x05values\x04\0\x0blocal-model\x03\0\0\x01r\x01\x05value\
-s\x04\0\x09new-model\x03\0\x02\x01j\x01\x03\x01s\x01@\x01\x03log\x01\0\x04\x04\0\
-\x13process-local-model\x01\x05\x04\0\x18rag:centroid-exports/api\x05\0\x04\0\x10\
-rag:centroid/raw\x04\0\x0b\x09\x01\0\x03raw\x03\0\0\0G\x09producers\x01\x0cproce\
-ssed-by\x02\x0dwit-component\x070.220.0\x10wit-bindgen-rust\x060.36.0";
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 286] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x9f\x01\x01A\x02\x01\
+A\x02\x01B\x08\x01r\x01\x05values\x04\0\x0blocal-model\x03\0\0\x01r\x01\x05value\
+s\x04\0\x09new-model\x03\0\x02\x01k\x03\x01j\x01\x04\x01s\x01@\x01\x03log\x01\0\x05\
+\x04\0\x13process-local-model\x01\x06\x04\0\x18rag:centroid-exports/api\x05\0\x04\
+\0\x15rag:centroid/centroid\x04\0\x0b\x0e\x01\0\x08centroid\x03\0\0\0G\x09produc\
+ers\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10wit-bindgen-rust\x060\
+.36.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

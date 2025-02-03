@@ -15,6 +15,8 @@ mod bindings;
 struct Component;
 
 impl Guest for Component {
+    // Once the log event collection reaches a 1000, we will send the local model to the centroid worker,
+    // and get an updated model back.
     fn process_log_event(log: LogEvent) -> Result<Response, String> {
         STATE.with_borrow_mut(|state| {
             let token_index = &mut state.token_index;
@@ -27,6 +29,7 @@ impl Guest for Component {
             let mut feature_vector = vec![0.0; token_index.len()];
 
             state.batch_logs.push(log.clone());
+            state.log.push(log.clone());
 
             for token in tokens {
                 let token = token.to_lowercase();
@@ -102,6 +105,7 @@ fn streaming_kmeans(
 }
 
 struct State {
+    log: Vec<LogEvent>, // This will be cleared and the local model is sent to centroid worker
     token_index: HashMap<String, usize>,
     index_counter: usize,
     token_counts: Vec<Vec<f64>>,
@@ -111,11 +115,8 @@ struct State {
 }
 
 thread_local! {
-    /**
-     * This holds the state of our application, which is always bound to
-     * a given user.
-     */
     static STATE: RefCell<State> = RefCell::new(State {
+        log: vec![], // This will be cleared once the local model is sent to centroid worker
         token_counts: vec![],
         token_index: HashMap::new(),
         local_model: None,

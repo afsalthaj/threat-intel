@@ -2,7 +2,7 @@ package rag:raw;
 
 world raw {
   import golem:rpc/types@0.1.1;
-  import rag:centroid-client/raw-client;
+  import rag:centroid-client/centroid-client;
   import rag:centroid-exports/api;
   import rag:embeddings-client/embeddings-client;
   import rag:embeddings-exports/api;
