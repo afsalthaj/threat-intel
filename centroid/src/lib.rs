@@ -12,7 +12,7 @@ mod local_model;
 struct Component;
 
 impl Guest for Component {
-    fn process_local_model(log: LocalModel) -> Result<NewModel, String> {
+    fn process_local_model(log: LocalModel) -> Result<Option<NewModel>, String> {
         let deserialized_model =
             LocalModelDeserialized::from_local_model(&log)?;
 
@@ -27,7 +27,7 @@ impl Guest for Component {
 
             Ok(state.model.clone().map(|x| NewModel {
                 value: serde_json::to_string(&x).expect("Failed to serialize the model.")
-            }).unwrap())
+            }))
         })
     }
 }
