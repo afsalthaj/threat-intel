@@ -2,7 +2,15 @@
 
 ### Security Threat Intel
 
+#### Log Processing Realtime Model Learning, Clustering, and Immediate Alert with LLM message
 ![img_1.png](img_1.png)
+
+
+#### Accumulated alerts 
+![img_2.png](img_2.png)
+
+#### Updated Models
+![img_3.png](img_3.png)
 
 Allows easier log correlation and analysis to find security threats!
 
