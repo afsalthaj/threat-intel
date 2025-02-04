@@ -1,18 +1,18 @@
 id: threat-intelligence-api
 draft: true
-version: "0.0.4"
+version: "0.0.14"
 routes:
   - method: Post
-    path: /v4/add-log
+    path: /v14/add-log
     binding:
       bindingType: default
       componentId:
         componentId: e411658d-7180-40c7-aad9-bb71ffa5e678
-        version: 1
+        version: 14
       workerName: |
-        "security-threat-intel-v3"
+        "security-threat-intel-v14"
       response: |
         let log_text: string = request.body.log;
         let input = {message: log_text};
         let process = rag:raw-exports/api.{process-log-event}(input);
-        {status : 200u64, body: "Log processed successfully", headers: {Content-Type: "application/json"}}
+        {status : 200u64, body: process, headers: {Content-Type: "application/json"}}

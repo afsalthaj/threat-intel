@@ -4,7 +4,10 @@ interface api {
   record log-embedding {
     value: list<f32>,
   }
-  get-log-embedding: func(log: string) -> result<log-embedding, string>;
+  record log-input {
+    log: string,
+  }
+  get-log-embedding: func(log: log-input) -> result<log-embedding, string>;
 }
 
 interface embeddings-inline-functions {}

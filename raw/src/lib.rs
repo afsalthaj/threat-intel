@@ -9,7 +9,7 @@ use crate::bindings::exports::rag::raw_exports::api::{Guest, LogEvent, Response}
 use crate::bindings::golem::rpc::types::Uri;
 use crate::bindings::rag::centroid_client::centroid_client::{Api as CentroidApi, LocalModel};
 use crate::bindings::rag::cluster_client::cluster_client::{Api as ClusterApi, ClusterInput};
-use crate::bindings::rag::embeddings_client::embeddings_client::Api as EmbedderApi;
+use crate::bindings::rag::embeddings_client::embeddings_client::{Api as EmbedderApi, LogInput};
 use ndarray::{Array2, AssignElem};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -26,13 +26,23 @@ impl Guest for Component {
             let token_index = &mut state.token_index;
             let mut index_counter = state.index_counter;
             let token_counts = &mut state.token_counts;
-            let batch_size = state.batch_size;
+            let batch_size: usize = std::env::var("LOG_BATCH_SIZE_FOR_LOCAL_MODEL_UPDATE").expect(
+                "LOG_BATCH_SIZE_FOR_LOCAL_MODEL_UPDATE not in the env"
+            ).parse().expect("Batch size needs to be u64");
+
+            let centroid_worker_name =  std::env::var("CENTROID_WORKER_NAME").expect(
+                "CENTROID_WORKER_NAME not in the env"
+            );
+
             state.batch_logs.push(log.clone());
 
             let tokens: Vec<&str> = log.message.split_whitespace().collect();
             let mut feature_vector = vec![0.0; token_index.len()];
 
-            // Computing sort of a term frequency
+            // No expert here: but the idea is
+            // Token-specific indexing: Each unique word gets its own index, meaning "Afsal"
+            // always maps to the same position in the vector.
+            // This ensures that user names and specific terms are consistently represented.
             for token in tokens {
                 let token = token.to_lowercase();
                 if !token_index.contains_key(&token) {
@@ -60,22 +70,13 @@ impl Guest for Component {
                 state.batch_logs.clear();
             }
 
-            // Currently we don't redistribute further - but we can make more secondary reducers
-            // for kmeans if things are working
-            let centroid_worker_id = "centroid".to_string();
-
 
             let component_id_of_centroid = std::env::var("CENTROID_COMPONENT_ID").expect(
                 "CENTROID_COMPONENT_ID not in the env"
             );
 
-            let text = component_id_of_centroid.clone();
-
-            println!("Component ID  {text}");
-            dbg!(component_id_of_centroid.clone());
-
             let centroid_uri = Uri {
-                value: format!("urn:worker:{}/{}", &component_id_of_centroid, &centroid_worker_id),
+                value: format!("urn:worker:{}/{}", &component_id_of_centroid, &centroid_worker_name),
             };
 
             let centroid_api = CentroidApi::new(&centroid_uri);
@@ -133,7 +134,9 @@ impl Guest for Component {
                             let embedder_api = EmbedderApi::new(&embedder_uri);
 
                             let embed_result = embedder_api.blocking_get_log_embedding(
-                                &feature_vector_and_log.1.clone().message,
+                                &LogInput {
+                                    log: feature_vector_and_log.1.message.clone(),
+                                }
                             )?;
 
                             let component_id_of_cluster = std::env::var("CLUSTER_COMPONENT_ID").expect(
@@ -162,16 +165,23 @@ impl Guest for Component {
                             state.token_counts.clear();
                             state.batch_logs.clear();
                         }
+
+                        let response = Response {
+                            detail: "The logs are sent to different clusters".to_string()
+                        };
+
+                        Ok(response)
                     }
 
-                    None => {}
+                    None => {
+                        let response = Response {
+                            detail: "processed and found new category of log".to_string(),
+                        };
+
+                        Ok(response)
+                    }
                 }
 
-                let response = Response {
-                    detail: "processed and found new category of log".to_string(),
-                };
-
-                Ok(response)
             } else {
                 let response = Response {
                     detail: "processed the log and waiting for new logs for analysis".to_string(),
@@ -233,7 +243,6 @@ struct State {
     index_counter: usize,
     token_counts: Vec<(Vec<f64>, LogEvent)>, // token counts and log messages are stored together
     local_model: Option<KMeans<f64, L2Dist>>,
-    batch_size: usize,
     batch_logs: Vec<LogEvent>, // A subset of the original logs that are going to be used for updating local model
 }
 
@@ -243,7 +252,6 @@ thread_local! {
         token_index: HashMap::new(),
         local_model: None,
         index_counter: 0,
-        batch_size: 0,
         batch_logs: vec![]
     });
 }

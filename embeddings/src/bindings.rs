@@ -26,6 +26,18 @@ pub mod exports {
                             .finish()
                     }
                 }
+                #[derive(Clone)]
+                pub struct LogInput {
+                    pub log: _rt::String,
+                }
+                impl ::core::fmt::Debug for LogInput {
+                    fn fmt(
+                        &self,
+                        f: &mut ::core::fmt::Formatter<'_>,
+                    ) -> ::core::fmt::Result {
+                        f.debug_struct("LogInput").field("log", &self.log).finish()
+                    }
+                }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
                 pub unsafe fn _export_get_log_embedding_cabi<T: Guest>(
@@ -35,7 +47,9 @@ pub mod exports {
                     #[cfg(target_arch = "wasm32")] _rt::run_ctors_once();
                     let len0 = arg1;
                     let bytes0 = _rt::Vec::from_raw_parts(arg0.cast(), len0, len0);
-                    let result1 = T::get_log_embedding(_rt::string_lift(bytes0));
+                    let result1 = T::get_log_embedding(LogInput {
+                        log: _rt::string_lift(bytes0),
+                    });
                     let ptr2 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
                     match result1 {
                         Ok(e) => {
@@ -81,7 +95,7 @@ pub mod exports {
                 }
                 pub trait Guest {
                     fn get_log_embedding(
-                        log: _rt::String,
+                        log: LogInput,
                     ) -> Result<LogEmbedding, _rt::String>;
                 }
                 #[doc(hidden)]
@@ -113,6 +127,7 @@ pub mod exports {
 #[rustfmt::skip]
 mod _rt {
     pub use alloc_crate::vec::Vec;
+    pub use alloc_crate::string::String;
     #[cfg(target_arch = "wasm32")]
     pub fn run_ctors_once() {
         wit_bindgen_rt::run_ctors_once();
@@ -131,7 +146,6 @@ mod _rt {
         let layout = alloc::Layout::from_size_align_unchecked(size, align);
         alloc::dealloc(ptr, layout);
     }
-    pub use alloc_crate::string::String;
     extern crate alloc as alloc_crate;
     pub use alloc_crate::alloc;
 }
@@ -168,13 +182,14 @@ pub(crate) use __export_embeddings_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.36.0:rag:embeddings:embeddings:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 269] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x8c\x01\x01A\x02\x01\
-A\x02\x01B\x06\x01pv\x01r\x01\x05value\0\x04\0\x0dlog-embedding\x03\0\x01\x01j\x01\
-\x02\x01s\x01@\x01\x03logs\0\x03\x04\0\x11get-log-embedding\x01\x04\x04\0\x1arag\
-:embeddings-exports/api\x05\0\x04\0\x19rag:embeddings/embeddings\x04\0\x0b\x10\x01\
-\0\x0aembeddings\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-componen\
-t\x070.220.0\x10wit-bindgen-rust\x060.36.0";
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 292] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xa3\x01\x01A\x02\x01\
+A\x02\x01B\x08\x01pv\x01r\x01\x05value\0\x04\0\x0dlog-embedding\x03\0\x01\x01r\x01\
+\x03logs\x04\0\x09log-input\x03\0\x03\x01j\x01\x02\x01s\x01@\x01\x03log\x04\0\x05\
+\x04\0\x11get-log-embedding\x01\x06\x04\0\x1arag:embeddings-exports/api\x05\0\x04\
+\0\x19rag:embeddings/embeddings\x04\0\x0b\x10\x01\0\x0aembeddings\x03\0\0\0G\x09\
+producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10wit-bindgen-rus\
+t\x060.36.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

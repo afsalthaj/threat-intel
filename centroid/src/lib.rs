@@ -12,6 +12,14 @@ mod local_model;
 struct Component;
 
 impl Guest for Component {
+    fn get_log_model() -> Result<Option<NewModel>, String> {
+        STATE.with_borrow_mut(|state| {
+            Ok(state.model.clone().map(|x| NewModel {
+                value: serde_json::to_string(&x).expect("Failed to serialize the model."),
+            }))
+        })
+    }
+
     fn process_local_model(log: LocalModel) -> Result<Option<NewModel>, String> {
         let deserialized_model = LocalModelDeserialized::from_local_model(&log)?;
 

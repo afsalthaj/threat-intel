@@ -7,6 +7,7 @@ interface api {
   record new-model {
     value: string,
   }
+  get-log-model: func() -> result<option<new-model>, string>;
   process-local-model: func(log: local-model) -> result<option<new-model>, string>;
 }
 

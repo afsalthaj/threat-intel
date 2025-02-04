@@ -4,12 +4,18 @@ interface centroid-client {
   use golem:rpc/types@0.1.1.{ uri as golem-rpc-uri };
   use wasi:io/poll@0.2.0.{ pollable as wasi-io-pollable };
   use rag:centroid-exports/api.{ local-model, new-model };
+  resource future-get-log-model-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<option<new-model>, string>>;
+  }
   resource future-process-local-model-result {
     subscribe: func() -> wasi-io-pollable;
     get: func() -> option<result<option<new-model>, string>>;
   }
   resource api {
     constructor(location: golem-rpc-uri);
+    blocking-get-log-model: func() -> result<option<new-model>, string>;
+    get-log-model: func() -> future-get-log-model-result;
     blocking-process-local-model: func(log: local-model) -> result<option<new-model>, string>;
     process-local-model: func(log: local-model) -> future-process-local-model-result;
   }

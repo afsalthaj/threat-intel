@@ -3,15 +3,15 @@ package rag:embeddings-client;
 interface embeddings-client {
   use golem:rpc/types@0.1.1.{ uri as golem-rpc-uri };
   use wasi:io/poll@0.2.0.{ pollable as wasi-io-pollable };
-  use rag:embeddings-exports/api.{ log-embedding };
+  use rag:embeddings-exports/api.{ log-embedding, log-input };
   resource future-get-log-embedding-result {
     subscribe: func() -> wasi-io-pollable;
     get: func() -> option<result<log-embedding, string>>;
   }
   resource api {
     constructor(location: golem-rpc-uri);
-    blocking-get-log-embedding: func(log: string) -> result<log-embedding, string>;
-    get-log-embedding: func(log: string) -> future-get-log-embedding-result;
+    blocking-get-log-embedding: func(log: log-input) -> result<log-embedding, string>;
+    get-log-embedding: func(log: log-input) -> future-get-log-embedding-result;
   }
 }
 

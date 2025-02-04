@@ -17,6 +17,13 @@ git = "https://github.com/zivergetech/reqwest"
 branch = "update-jun-2024"
 features = ["json"]
 
+[dependencies.serde]
+version = "1.0.217"
+features = ["derive"]
+
+[dependencies.serde_derive]
+version = "1.0.217"
+
 [dependencies.wit-bindgen-rt]
 version = "0.37.0"
 features = ["bitflags"]

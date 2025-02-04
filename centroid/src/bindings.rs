@@ -38,6 +38,66 @@ pub mod exports {
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
+                pub unsafe fn _export_get_log_model_cabi<T: Guest>() -> *mut u8 {
+                    #[cfg(target_arch = "wasm32")] _rt::run_ctors_once();
+                    let result0 = T::get_log_model();
+                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
+                    match result0 {
+                        Ok(e) => {
+                            *ptr1.add(0).cast::<u8>() = (0i32) as u8;
+                            match e {
+                                Some(e) => {
+                                    *ptr1.add(4).cast::<u8>() = (1i32) as u8;
+                                    let NewModel { value: value2 } = e;
+                                    let vec3 = (value2.into_bytes()).into_boxed_slice();
+                                    let ptr3 = vec3.as_ptr().cast::<u8>();
+                                    let len3 = vec3.len();
+                                    ::core::mem::forget(vec3);
+                                    *ptr1.add(12).cast::<usize>() = len3;
+                                    *ptr1.add(8).cast::<*mut u8>() = ptr3.cast_mut();
+                                }
+                                None => {
+                                    *ptr1.add(4).cast::<u8>() = (0i32) as u8;
+                                }
+                            };
+                        }
+                        Err(e) => {
+                            *ptr1.add(0).cast::<u8>() = (1i32) as u8;
+                            let vec4 = (e.into_bytes()).into_boxed_slice();
+                            let ptr4 = vec4.as_ptr().cast::<u8>();
+                            let len4 = vec4.len();
+                            ::core::mem::forget(vec4);
+                            *ptr1.add(8).cast::<usize>() = len4;
+                            *ptr1.add(4).cast::<*mut u8>() = ptr4.cast_mut();
+                        }
+                    };
+                    ptr1
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn __post_return_get_log_model<T: Guest>(arg0: *mut u8) {
+                    let l0 = i32::from(*arg0.add(0).cast::<u8>());
+                    match l0 {
+                        0 => {
+                            let l1 = i32::from(*arg0.add(4).cast::<u8>());
+                            match l1 {
+                                0 => {}
+                                _ => {
+                                    let l2 = *arg0.add(8).cast::<*mut u8>();
+                                    let l3 = *arg0.add(12).cast::<usize>();
+                                    _rt::cabi_dealloc(l2, l3, 1);
+                                }
+                            }
+                        }
+                        _ => {
+                            let l4 = *arg0.add(4).cast::<*mut u8>();
+                            let l5 = *arg0.add(8).cast::<usize>();
+                            _rt::cabi_dealloc(l4, l5, 1);
+                        }
+                    }
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
                 pub unsafe fn _export_process_local_model_cabi<T: Guest>(
                     arg0: *mut u8,
                     arg1: usize,
@@ -106,6 +166,7 @@ pub mod exports {
                     }
                 }
                 pub trait Guest {
+                    fn get_log_model() -> Result<Option<NewModel>, _rt::String>;
                     fn process_local_model(
                         log: LocalModel,
                     ) -> Result<Option<NewModel>, _rt::String>;
@@ -114,9 +175,15 @@ pub mod exports {
                 macro_rules! __export_rag_centroid_exports_api_cabi {
                     ($ty:ident with_types_in $($path_to_types:tt)*) => {
                         const _ : () = { #[export_name =
-                        "rag:centroid-exports/api#process-local-model"] unsafe extern "C"
-                        fn export_process_local_model(arg0 : * mut u8, arg1 : usize,) ->
-                        * mut u8 { $($path_to_types)*::
+                        "rag:centroid-exports/api#get-log-model"] unsafe extern "C" fn
+                        export_get_log_model() -> * mut u8 { $($path_to_types)*::
+                        _export_get_log_model_cabi::<$ty > () } #[export_name =
+                        "cabi_post_rag:centroid-exports/api#get-log-model"] unsafe extern
+                        "C" fn _post_return_get_log_model(arg0 : * mut u8,) {
+                        $($path_to_types)*:: __post_return_get_log_model::<$ty > (arg0) }
+                        #[export_name = "rag:centroid-exports/api#process-local-model"]
+                        unsafe extern "C" fn export_process_local_model(arg0 : * mut u8,
+                        arg1 : usize,) -> * mut u8 { $($path_to_types)*::
                         _export_process_local_model_cabi::<$ty > (arg0, arg1) }
                         #[export_name =
                         "cabi_post_rag:centroid-exports/api#process-local-model"] unsafe
@@ -143,6 +210,13 @@ mod _rt {
     pub fn run_ctors_once() {
         wit_bindgen_rt::run_ctors_once();
     }
+    pub unsafe fn cabi_dealloc(ptr: *mut u8, size: usize, align: usize) {
+        if size == 0 {
+            return;
+        }
+        let layout = alloc::Layout::from_size_align_unchecked(size, align);
+        alloc::dealloc(ptr, layout);
+    }
     pub use alloc_crate::vec::Vec;
     pub unsafe fn string_lift(bytes: Vec<u8>) -> String {
         if cfg!(debug_assertions) {
@@ -150,13 +224,6 @@ mod _rt {
         } else {
             String::from_utf8_unchecked(bytes)
         }
-    }
-    pub unsafe fn cabi_dealloc(ptr: *mut u8, size: usize, align: usize) {
-        if size == 0 {
-            return;
-        }
-        let layout = alloc::Layout::from_size_align_unchecked(size, align);
-        alloc::dealloc(ptr, layout);
     }
     extern crate alloc as alloc_crate;
     pub use alloc_crate::alloc;
@@ -194,14 +261,14 @@ pub(crate) use __export_centroid_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.36.0:rag:centroid:centroid:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 286] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x9f\x01\x01A\x02\x01\
-A\x02\x01B\x08\x01r\x01\x05values\x04\0\x0blocal-model\x03\0\0\x01r\x01\x05value\
-s\x04\0\x09new-model\x03\0\x02\x01k\x03\x01j\x01\x04\x01s\x01@\x01\x03log\x01\0\x05\
-\x04\0\x13process-local-model\x01\x06\x04\0\x18rag:centroid-exports/api\x05\0\x04\
-\0\x15rag:centroid/centroid\x04\0\x0b\x0e\x01\0\x08centroid\x03\0\0\0G\x09produc\
-ers\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10wit-bindgen-rust\x060\
-.36.0";
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 309] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xb6\x01\x01A\x02\x01\
+A\x02\x01B\x0a\x01r\x01\x05values\x04\0\x0blocal-model\x03\0\0\x01r\x01\x05value\
+s\x04\0\x09new-model\x03\0\x02\x01k\x03\x01j\x01\x04\x01s\x01@\0\0\x05\x04\0\x0d\
+get-log-model\x01\x06\x01@\x01\x03log\x01\0\x05\x04\0\x13process-local-model\x01\
+\x07\x04\0\x18rag:centroid-exports/api\x05\0\x04\0\x15rag:centroid/centroid\x04\0\
+\x0b\x0e\x01\0\x08centroid\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwi\
+t-component\x070.220.0\x10wit-bindgen-rust\x060.36.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

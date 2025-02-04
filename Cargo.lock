@@ -186,6 +186,8 @@ version = "0.1.0"
 dependencies = [
  "golem-rust",
  "reqwest",
+ "serde",
+ "serde_derive",
  "wit-bindgen-rt 0.37.0",
 ]
 
