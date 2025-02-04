@@ -26,11 +26,9 @@ impl Guest for Component {
         STATE.with_borrow_mut(|state| {
             state.local_model.push(deserialized_model);
 
-            // We will make this a constant for now, but we can make it configurable later.
-            // Once the local nodes are done processing the logs, we will update the centroid
-            if state.local_model.len() >= 10 {
-                state.update_global_model()?;
-            }
+            // Probably we can apply some batching here as well, but for prototyping
+            // it's okay to update the global model every time a local model is received.
+            state.update_global_model()?;
 
             Ok(state.model.clone().map(|x| NewModel {
                 value: serde_json::to_string(&x).expect("Failed to serialize the model."),
@@ -81,10 +79,6 @@ impl State {
 }
 
 thread_local! {
-    /**
-     * This holds the state of our application, which is always bound to
-     * a given user.
-     */
     static STATE: RefCell<State> = RefCell::new(State {
         local_model: vec![],
         model: None,

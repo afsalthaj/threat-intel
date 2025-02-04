@@ -1,6 +1,8 @@
 # Security Threat Intelligence with Golem with Distributed clustering and RAG with gpt-4
 
-### Security Threat
+### Security Threat Intel
+
+![img_1.png](img_1.png)
 
 Allows easier log correlation and analysis to find security threats!
 
@@ -9,7 +11,6 @@ Allows easier log correlation and analysis to find security threats!
 * Without using a SIEM ((Security Information and Event Management), a very simple streaming clustering algorithm which is distributed to find centroids of various logs, backed by gpt-4 model with RAG to get proper alert message (after analysis).
 * Cost effective and even more reliable due to reliability on ever-learning models in memory.
 * LLM-Driven Analysis:The LLM analyzes these distributed events and suggests: "This appears to be a brute-force attack followed by privilege escalation and data exfiltration."
-
 
 ## Components and Responsibilities
 
@@ -70,7 +71,6 @@ Allows easier log correlation and analysis to find security threats!
     - Cluster worker keeps track of all alert messages and the collection of log messages, which can be retrieved at any time
     - "It looks like a user tried to log in after 10 attempts from an unknown geolocation."
     - Requests logs of failed attempts, firewall logs, and correlates timestamps.
-
 
 
 

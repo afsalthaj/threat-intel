@@ -5,8 +5,8 @@ cd target/wasm32-wasip1/debug
 ```
 
 ```sh
-/Users/afsalthaj/projects/resolve/golem/target/debug/golem component add
-# /Users/afsalthaj/projects/resolve/golem/target/debug/golem component update
+#/Users/afsalthaj/projects/resolve/golem/target/debug/golem component add
+/Users/afsalthaj/projects/resolve/golem/target/debug/golem component update
 
 ```
 
@@ -45,7 +45,9 @@ cd target/wasm32-wasip1/debug
 ## Starting the threat intel worker
 
 ```sh
-/Users/afsalthaj/projects/resolve/golem/target/debug/golem worker add --worker-name security-threat-intel-v14 --component urn:component:e411658d-7180-40c7-aad9-bb71ffa5e678  --env CENTROID_WORKER_NAME=centroid_v14 --env LOG_BATCH_SIZE_FOR_LOCAL_MODEL_UPDATE=5 --env LLM_COMPONENT_ID=0936ffc2-be5c-4c03-83df-fdc05541bc36 --env CENTROID_COMPONENT_ID=9cd172f5-f2ec-4ff4-b872-9695930e7c4a --env EMBEDDER_COMPONENT_ID=6e6ad88a-b253-4200-b8a6-7d6a08c74c57 --env CLUSTER_COMPONENT_ID=502e9b39-7e09-4051-b1be-5e12b9840ca2
+/Users/afsalthaj/projects/resolve/golem/target/debug/golem worker delete --worker-name cluster_0 --component-name cluster
+/Users/afsalthaj/projects/resolve/golem/target/debug/golem worker delete --worker-name cluster_1 --component-name cluster
+/Users/afsalthaj/projects/resolve/golem/target/debug/golem worker delete --worker-name security-threat-intel-v33 --component-name raw
 ```
 
 ```sh
@@ -85,7 +87,7 @@ Routes:
 #### API definition deploy
 
 ```sh
- /Users/afsalthaj/projects/resolve/golem/target/debug/golem api-deployment deploy --host localhost:9006 --definition threat-intelligence-api/0.0.14
+ /Users/afsalthaj/projects/resolve/golem/target/debug/golem api-deployment deploy --host localhost:9006 --definition threat-intelligence-api/0.0.42
 ```
 
 ```shell
@@ -101,9 +103,15 @@ API deployment on localhost:9006 with definition threat-intelligence-api/0.0.6
 ### Testing the API
 
 ```sh
-curl -X POST http://localhost:9006/v14/add-log -d '{"log" : "Failed login attempt from afsal"}'
+curl -X GET http://localhost:9006/v42/get-current-model
+curl -X POST http://localhost:9006/v42/add-log -d '{"log" : "Failed login attempt from afsal"}'
 Log processed successfully
-curl -X POST http://localhost:9006/v14/add-log -d '{"log" : "Unknown geolocation from Jon"}'
+curl -X POST http://localhost:9006/v42/add-log -d '{"log" : "Unknown geolocation from Jon"}'
+
+curl -X GET http://localhost:9006/v42/get-current-model
+curl -X GET http://localhost:9006/v42/get-alert-messages
+curl -X GET http://localhost:9006/v42/get-log-messages
+
 ```
 
 The pipeline needs to be tested with more number of logs, until we hit the batch size etc

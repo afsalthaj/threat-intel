@@ -3,10 +3,14 @@ package rag:cluster-client;
 interface cluster-client {
   use golem:rpc/types@0.1.1.{ uri as golem-rpc-uri };
   use wasi:io/poll@0.2.0.{ pollable as wasi-io-pollable };
-  use rag:cluster-exports/api.{ alert-message, cluster-input };
+  use rag:cluster-exports/api.{ alert-message, cluster-input, log-messages-tracked };
   resource future-get-alert-messages-result {
     subscribe: func() -> wasi-io-pollable;
     get: func() -> option<result<list<alert-message>, string>>;
+  }
+  resource future-get-log-messages-result {
+    subscribe: func() -> wasi-io-pollable;
+    get: func() -> option<result<list<log-messages-tracked>, string>>;
   }
   resource future-process-cluster-input-result {
     subscribe: func() -> wasi-io-pollable;
@@ -16,6 +20,8 @@ interface cluster-client {
     constructor(location: golem-rpc-uri);
     blocking-get-alert-messages: func() -> result<list<alert-message>, string>;
     get-alert-messages: func() -> future-get-alert-messages-result;
+    blocking-get-log-messages: func() -> result<list<log-messages-tracked>, string>;
+    get-log-messages: func() -> future-get-log-messages-result;
     blocking-process-cluster-input: func(log: cluster-input) -> result<option<alert-message>, string>;
     process-cluster-input: func(log: cluster-input) -> future-process-cluster-input-result;
   }

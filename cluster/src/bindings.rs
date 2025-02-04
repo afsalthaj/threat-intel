@@ -4278,6 +4278,22 @@ pub mod exports {
                             .finish()
                     }
                 }
+                #[derive(Clone)]
+                pub struct LogMessagesTracked {
+                    pub log: _rt::String,
+                    pub embedding: _rt::Vec<f32>,
+                }
+                impl ::core::fmt::Debug for LogMessagesTracked {
+                    fn fmt(
+                        &self,
+                        f: &mut ::core::fmt::Formatter<'_>,
+                    ) -> ::core::fmt::Result {
+                        f.debug_struct("LogMessagesTracked")
+                            .field("log", &self.log)
+                            .field("embedding", &self.embedding)
+                            .finish()
+                    }
+                }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
                 pub unsafe fn _export_get_alert_messages_cabi<T: Guest>() -> *mut u8 {
@@ -4353,6 +4369,98 @@ pub mod exports {
                             let l6 = *arg0.add(4).cast::<*mut u8>();
                             let l7 = *arg0.add(8).cast::<usize>();
                             _rt::cabi_dealloc(l6, l7, 1);
+                        }
+                    }
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_get_log_messages_cabi<T: Guest>() -> *mut u8 {
+                    #[cfg(target_arch = "wasm32")] _rt::run_ctors_once();
+                    let result0 = T::get_log_messages();
+                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
+                    match result0 {
+                        Ok(e) => {
+                            *ptr1.add(0).cast::<u8>() = (0i32) as u8;
+                            let vec5 = e;
+                            let len5 = vec5.len();
+                            let layout5 = _rt::alloc::Layout::from_size_align_unchecked(
+                                vec5.len() * 16,
+                                4,
+                            );
+                            let result5 = if layout5.size() != 0 {
+                                let ptr = _rt::alloc::alloc(layout5).cast::<u8>();
+                                if ptr.is_null() {
+                                    _rt::alloc::handle_alloc_error(layout5);
+                                }
+                                ptr
+                            } else {
+                                ::core::ptr::null_mut()
+                            };
+                            for (i, e) in vec5.into_iter().enumerate() {
+                                let base = result5.add(i * 16);
+                                {
+                                    let LogMessagesTracked {
+                                        log: log2,
+                                        embedding: embedding2,
+                                    } = e;
+                                    let vec3 = (log2.into_bytes()).into_boxed_slice();
+                                    let ptr3 = vec3.as_ptr().cast::<u8>();
+                                    let len3 = vec3.len();
+                                    ::core::mem::forget(vec3);
+                                    *base.add(4).cast::<usize>() = len3;
+                                    *base.add(0).cast::<*mut u8>() = ptr3.cast_mut();
+                                    let vec4 = (embedding2).into_boxed_slice();
+                                    let ptr4 = vec4.as_ptr().cast::<u8>();
+                                    let len4 = vec4.len();
+                                    ::core::mem::forget(vec4);
+                                    *base.add(12).cast::<usize>() = len4;
+                                    *base.add(8).cast::<*mut u8>() = ptr4.cast_mut();
+                                }
+                            }
+                            *ptr1.add(8).cast::<usize>() = len5;
+                            *ptr1.add(4).cast::<*mut u8>() = result5;
+                        }
+                        Err(e) => {
+                            *ptr1.add(0).cast::<u8>() = (1i32) as u8;
+                            let vec6 = (e.into_bytes()).into_boxed_slice();
+                            let ptr6 = vec6.as_ptr().cast::<u8>();
+                            let len6 = vec6.len();
+                            ::core::mem::forget(vec6);
+                            *ptr1.add(8).cast::<usize>() = len6;
+                            *ptr1.add(4).cast::<*mut u8>() = ptr6.cast_mut();
+                        }
+                    };
+                    ptr1
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn __post_return_get_log_messages<T: Guest>(arg0: *mut u8) {
+                    let l0 = i32::from(*arg0.add(0).cast::<u8>());
+                    match l0 {
+                        0 => {
+                            let l1 = *arg0.add(4).cast::<*mut u8>();
+                            let l2 = *arg0.add(8).cast::<usize>();
+                            let base8 = l1;
+                            let len8 = l2;
+                            for i in 0..len8 {
+                                let base = base8.add(i * 16);
+                                {
+                                    let l3 = *base.add(0).cast::<*mut u8>();
+                                    let l4 = *base.add(4).cast::<usize>();
+                                    _rt::cabi_dealloc(l3, l4, 1);
+                                    let l5 = *base.add(8).cast::<*mut u8>();
+                                    let l6 = *base.add(12).cast::<usize>();
+                                    let base7 = l5;
+                                    let len7 = l6;
+                                    _rt::cabi_dealloc(base7, len7 * 4, 4);
+                                }
+                            }
+                            _rt::cabi_dealloc(base8, len8 * 16, 4);
+                        }
+                        _ => {
+                            let l9 = *arg0.add(4).cast::<*mut u8>();
+                            let l10 = *arg0.add(8).cast::<usize>();
+                            _rt::cabi_dealloc(l9, l10, 1);
                         }
                     }
                 }
@@ -4434,6 +4542,10 @@ pub mod exports {
                         _rt::Vec<AlertMessage>,
                         _rt::String,
                     >;
+                    fn get_log_messages() -> Result<
+                        _rt::Vec<LogMessagesTracked>,
+                        _rt::String,
+                    >;
                     fn process_cluster_input(
                         log: ClusterInput,
                     ) -> Result<Option<AlertMessage>, _rt::String>;
@@ -4448,6 +4560,13 @@ pub mod exports {
                         "cabi_post_rag:cluster-exports/api#get-alert-messages"] unsafe
                         extern "C" fn _post_return_get_alert_messages(arg0 : * mut u8,) {
                         $($path_to_types)*:: __post_return_get_alert_messages::<$ty >
+                        (arg0) } #[export_name =
+                        "rag:cluster-exports/api#get-log-messages"] unsafe extern "C" fn
+                        export_get_log_messages() -> * mut u8 { $($path_to_types)*::
+                        _export_get_log_messages_cabi::<$ty > () } #[export_name =
+                        "cabi_post_rag:cluster-exports/api#get-log-messages"] unsafe
+                        extern "C" fn _post_return_get_log_messages(arg0 : * mut u8,) {
+                        $($path_to_types)*:: __post_return_get_log_messages::<$ty >
                         (arg0) } #[export_name =
                         "rag:cluster-exports/api#process-cluster-input"] unsafe extern
                         "C" fn export_process_cluster_input(arg0 : * mut u8, arg1 :
@@ -4744,8 +4863,8 @@ pub(crate) use __export_cluster_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.36.0:rag:cluster:cluster:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2714] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x9c\x14\x01A\x02\x01\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2794] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xec\x14\x01A\x02\x01\
 A\x0f\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\
 \x16[method]pollable.ready\x01\x02\x01@\x01\x04self\x01\x01\0\x04\0\x16[method]p\
 ollable.block\x01\x03\x01p\x01\x01py\x01@\x01\x02in\x04\0\x05\x04\0\x04poll\x01\x06\
@@ -4796,14 +4915,15 @@ prompt\x01B\x1d\x02\x03\x02\x01\x04\x04\0\x0dgolem-rpc-uri\x03\0\0\x02\x03\x02\x
 \0\x12\x04\0\x10[constructor]api\x01\x13\x01h\x0b\x01@\x03\x04self\x14\x06prompt\
 \x09\x07context\x05\0\x0f\x04\0\x1e[method]api.blocking-ask-model\x01\x15\x01i\x0a\
 \x01@\x03\x04self\x14\x06prompt\x09\x07context\x05\0\x16\x04\0\x15[method]api.as\
-k-model\x01\x17\x03\0\x19rag:llm-client/llm-client\x05\x08\x01B\x0d\x01r\x01\x05\
+k-model\x01\x17\x03\0\x19rag:llm-client/llm-client\x05\x08\x01B\x13\x01r\x01\x05\
 values\x04\0\x0dalert-message\x03\0\0\x01pv\x01r\x02\x08log-lines\x09embedding\x02\
-\x04\0\x0dcluster-input\x03\0\x03\x01p\x01\x01j\x01\x05\x01s\x01@\0\0\x06\x04\0\x12\
-get-alert-messages\x01\x07\x01k\x01\x01j\x01\x08\x01s\x01@\x01\x03log\x04\0\x09\x04\
-\0\x15process-cluster-input\x01\x0a\x04\0\x17rag:cluster-exports/api\x05\x09\x04\
-\0\x13rag:cluster/cluster\x04\0\x0b\x0d\x01\0\x07cluster\x03\0\0\0G\x09producers\
-\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10wit-bindgen-rust\x060.36\
-.0";
+\x04\0\x0dcluster-input\x03\0\x03\x01r\x02\x03logs\x09embedding\x02\x04\0\x14log\
+-messages-tracked\x03\0\x05\x01p\x01\x01j\x01\x07\x01s\x01@\0\0\x08\x04\0\x12get\
+-alert-messages\x01\x09\x01p\x06\x01j\x01\x0a\x01s\x01@\0\0\x0b\x04\0\x10get-log\
+-messages\x01\x0c\x01k\x01\x01j\x01\x0d\x01s\x01@\x01\x03log\x04\0\x0e\x04\0\x15\
+process-cluster-input\x01\x0f\x04\0\x17rag:cluster-exports/api\x05\x09\x04\0\x13\
+rag:cluster/cluster\x04\0\x0b\x0d\x01\0\x07cluster\x03\0\0\0G\x09producers\x01\x0c\
+processed-by\x02\x0dwit-component\x070.220.0\x10wit-bindgen-rust\x060.36.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
 use uuid::Uuid;
-use crate::bindings::exports::rag::cluster_exports::api::{AlertMessage, ClusterInput, Guest};
+use crate::bindings::exports::rag::cluster_exports::api::{AlertMessage, ClusterInput, Guest, LogMessagesTracked};
 use crate::bindings::golem::rpc::types::Uri;
 use crate::bindings::rag::llm_client::llm_client::{Api as LlmApi, Context, Prompt};
 
@@ -17,6 +17,21 @@ impl Guest for Component {
             for (_, v) in state.alert_messages.clone() {
                 messages.push(AlertMessage {
                     value: v
+                });
+            }
+
+            Ok(messages)
+        })
+    }
+
+    fn get_log_messages() -> Result<Vec<LogMessagesTracked>, String> {
+        STATE.with_borrow_mut(|state| {
+            let mut messages = vec![];
+
+            for (k, v) in state.log_messages.clone() {
+                messages.push(LogMessagesTracked {
+                    log: k,
+                    embedding: v
                 });
             }
 
@@ -40,17 +55,22 @@ impl Guest for Component {
                 }
             }
 
-            if found_similarity {
-                state.log_messages.insert(
-                    log.log_line.clone(),
-                    log.embedding.clone()
-                );
-            };
+            state.log_messages.insert(
+                log.log_line.clone(),
+                log.embedding.clone()
+            );
+
+            // if found_similarity {
+            //     state.log_messages.insert(
+            //         log.log_line.clone(),
+            //         log.embedding.clone()
+            //     );
+            // };
 
             // Not sure if this is a good idea - this requires domain level testing
             // Waiting for more messages in the cluster
             // may be ok, as we don't filter "risk" vs "safe" messages
-            if state.log_messages.len() > 10 {
+            if state.log_messages.len() > 0 {
                 let llm_worker_id = Uuid::new_v4();
 
                 // To be replaced

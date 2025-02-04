@@ -1,18 +1,54 @@
 id: threat-intelligence-api
 draft: true
-version: "0.0.14"
+version: "0.0.42"
 routes:
   - method: Post
-    path: /v14/add-log
+    path: /v42/add-log
     binding:
       bindingType: default
       componentId:
         componentId: e411658d-7180-40c7-aad9-bb71ffa5e678
-        version: 14
+        version: 41
       workerName: |
-        "security-threat-intel-v14"
+        "security-threat-intel-v42"
       response: |
         let log_text: string = request.body.log;
         let input = {message: log_text};
         let process = rag:raw-exports/api.{process-log-event}(input);
         {status : 200u64, body: process, headers: {Content-Type: "application/json"}}
+  - method: Get
+    path: /v42/get-current-model
+    binding:
+      bindingType: default
+      componentId:
+        componentId: 9cd172f5-f2ec-4ff4-b872-9695930e7c4a
+        version: 41
+      workerName: |
+        "centroid_v42"
+      response: |
+        let result = rag:centroid-exports/api.{get-log-model}();
+        {status : 200u64, body: result, headers: {Content-Type: "application/json"}}
+  - method: Get
+    path: /v42/get-alert-messages
+    binding:
+      bindingType: default
+      componentId:
+        componentId: 502e9b39-7e09-4051-b1be-5e12b9840ca2
+        version: 41
+      workerName: |
+        "cluster_0"
+      response: |
+        let result = rag:cluster-exports/api.{get-alert-messages}();
+        {status : 200u64, body: result, headers: {Content-Type: "application/json"}}
+  - method: Get
+    path: /v42/get-log-messages
+    binding:
+      bindingType: default
+      componentId:
+        componentId: 502e9b39-7e09-4051-b1be-5e12b9840ca2
+        version: 41
+      workerName: |
+        "cluster_0"
+      response: |
+        let result = rag:cluster-exports/api.{get-log-messages}();
+        {status : 200u64, body: result, headers: {Content-Type: "application/json"}}

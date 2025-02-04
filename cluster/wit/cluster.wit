@@ -11,7 +11,13 @@ interface api {
     value: string
  }
 
+  record log-messages-tracked {
+    log: string,
+    embedding: list<f32>
+  }
+
   process-cluster-input: func(log: cluster-input) -> result<option<alert-message>, string>;
+  get-log-messages: func() -> result<list<log-messages-tracked>, string>;
   get-alert-messages: func() -> result<list<alert-message>, string>;
 }
 

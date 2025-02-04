@@ -8,7 +8,12 @@ interface api {
     log-line: string,
     embedding: list<f32>,
   }
+  record log-messages-tracked {
+    log: string,
+    embedding: list<f32>,
+  }
   get-alert-messages: func() -> result<list<alert-message>, string>;
+  get-log-messages: func() -> result<list<log-messages-tracked>, string>;
   process-cluster-input: func(log: cluster-input) -> result<option<alert-message>, string>;
 }
 

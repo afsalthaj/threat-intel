@@ -25,7 +25,7 @@ impl Guest for Component {
         STATE.with_borrow_mut(|state| {
             let token_index = &mut state.token_index;
             let mut index_counter = state.index_counter;
-            let token_counts = &mut state.token_counts;
+            let feature_vector_and_logs = &mut state.feature_vector_and_logs;
             let batch_size: usize = std::env::var("LOG_BATCH_SIZE_FOR_LOCAL_MODEL_UPDATE").expect(
                 "LOG_BATCH_SIZE_FOR_LOCAL_MODEL_UPDATE not in the env"
             ).parse().expect("Batch size needs to be u64");
@@ -58,28 +58,18 @@ impl Guest for Component {
                 }
             }
 
-            token_counts.push((feature_vector, log));
+            feature_vector_and_logs.push((feature_vector, log));
 
-            if token_counts.len() == batch_size {
+            if feature_vector_and_logs.len() == batch_size {
                 state.local_model = Some(streaming_kmeans(
-                    &token_counts,
+                    &feature_vector_and_logs,
                     &state.batch_logs,
                     state.local_model.clone(),
                 ));
-                token_counts.clear();
+
                 state.batch_logs.clear();
             }
 
-
-            let component_id_of_centroid = std::env::var("CENTROID_COMPONENT_ID").expect(
-                "CENTROID_COMPONENT_ID not in the env"
-            );
-
-            let centroid_uri = Uri {
-                value: format!("urn:worker:{}/{}", &component_id_of_centroid, &centroid_worker_name),
-            };
-
-            let centroid_api = CentroidApi::new(&centroid_uri);
 
             let local_model = state.local_model.clone();
 
@@ -90,9 +80,20 @@ impl Guest for Component {
                     .expect("Unable to serialize")
                     .to_string();
 
+                let component_id_of_centroid = std::env::var("CENTROID_COMPONENT_ID").expect(
+                    "CENTROID_COMPONENT_ID not in the env"
+                );
+
+                let centroid_uri = Uri {
+                    value: format!("urn:worker:{}/{}", &component_id_of_centroid, &centroid_worker_name),
+                };
+
+                let centroid_api = CentroidApi::new(&centroid_uri);
+
                 let generic_model_opt =
                     centroid_api.blocking_process_local_model(&LocalModel { value: serialized })?;
 
+                let mut any_immediate_alert = None;
                 match generic_model_opt {
                     Some(generic_model) => {
                         // Possibly all the logs in the current worker can now be assigned to specific clusters
@@ -101,8 +102,10 @@ impl Guest for Component {
                                 .map_err(|err| err.to_string())?;
 
                         // Prepare the token counts as feature vectors
-                        let max_len = token_counts.iter().map(|v| v.0.len()).max().unwrap_or(0);
-                        let mut padded_vectors = token_counts.clone();
+                        let max_len = feature_vector_and_logs.iter().map(|v| v.0.len()).max().unwrap_or(0);
+                        let mut padded_vectors = feature_vector_and_logs.clone();
+
+                        println!("--- End of Batch ---\n");
 
                         // Pad vectors to ensure they're all the same length
                         for feature_vector_and_log in &mut padded_vectors {
@@ -159,16 +162,27 @@ impl Guest for Component {
                                 embedding: embed_result.value,
                             };
 
-                            let _ = api.blocking_process_cluster_input(&cluster_input);
-                            println!("The log has been sent to a threat cluster");
+                            let msg = api.blocking_process_cluster_input(&cluster_input)?;
+                            if let Some(msg)  = msg {
+                                any_immediate_alert = Some(msg)
+                            };
 
-                            state.token_counts.clear();
                             state.batch_logs.clear();
                         }
 
-                        let response = Response {
-                            detail: "The logs are sent to different clusters".to_string()
+                        let response = if let Some(immediate_alert) = any_immediate_alert {
+                            format!(  "The log is sent to a specific cluster. There is an immediate alert: {}", immediate_alert.value)
+                        } else {
+                            "The log is sent to a specific cluster".to_string()
                         };
+
+                        let response = Response {
+                            detail: response
+                        };
+
+                        if feature_vector_and_logs.len() == batch_size {
+                            state.feature_vector_and_logs.clear()
+                        }
 
                         Ok(response)
                     }
@@ -178,6 +192,10 @@ impl Guest for Component {
                             detail: "processed and found new category of log".to_string(),
                         };
 
+                        if feature_vector_and_logs.len() == batch_size {
+                            state.feature_vector_and_logs.clear()
+                        }
+
                         Ok(response)
                     }
                 }
@@ -186,6 +204,10 @@ impl Guest for Component {
                 let response = Response {
                     detail: "processed the log and waiting for new logs for analysis".to_string(),
                 };
+
+                if feature_vector_and_logs.len() == batch_size {
+                    state.feature_vector_and_logs.clear()
+                }
 
                 Ok(response)
             }
@@ -213,7 +235,7 @@ fn streaming_kmeans(
             .collect::<Vec<_>>()
             .concat(),
     )
-    .unwrap();
+    .expect("Failed to get the data");
 
     let dataset = DatasetBase::from(data);
     let n_clusters = 3;
@@ -241,14 +263,14 @@ fn streaming_kmeans(
 struct State {
     token_index: HashMap<String, usize>,
     index_counter: usize,
-    token_counts: Vec<(Vec<f64>, LogEvent)>, // token counts and log messages are stored together
+    feature_vector_and_logs: Vec<(Vec<f64>, LogEvent)>, // token counts and log messages are stored together
     local_model: Option<KMeans<f64, L2Dist>>,
     batch_logs: Vec<LogEvent>, // A subset of the original logs that are going to be used for updating local model
 }
 
 thread_local! {
     static STATE: RefCell<State> = RefCell::new(State {
-        token_counts: vec![],
+        feature_vector_and_logs: vec![],
         token_index: HashMap::new(),
         local_model: None,
         index_counter: 0,

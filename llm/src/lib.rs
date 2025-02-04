@@ -8,7 +8,7 @@ struct Component;
 
 impl Guest for Component {
     fn ask_model(prompt: Prompt, context: Context) -> std::result::Result<LlmResponse, String> {
-        let open_api_key = std::env::var("OPENAI_API_KEY").expect("Failed to find open API key");
+        let open_api_key = std::env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY not present");
 
         let bearer_token = format!("Bearer {}", open_api_key);
 
