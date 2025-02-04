@@ -14,11 +14,14 @@
 
 Allows easier log correlation and analysis to find security threats!
 
-* Raw Event Ingestion: Firewall logs, endpoint logs, and DNS traffic are ingested directly into Golem nodes. This can be batch push to predefined set of workers. It doesn't really matter
-* The pre-processor step of structred log-event is skipped in this project
-* Without using a SIEM ((Security Information and Event Management), a very simple streaming clustering algorithm which is distributed to find centroids of various logs, backed by gpt-4 model with RAG to get proper alert message (after analysis).
-* Cost effective and even more reliable due to reliability on ever-learning models in memory.
-* LLM-Driven Analysis:The LLM analyzes these distributed events and suggests: "This appears to be a brute-force attack followed by privilege escalation and data exfiltration."
+* Log events Firewall logs, endpoint logs, and DNS traffic are ingested directly into Golem nodes. A batch push to predefined set of workers.
+* Streaming distributed clustering implemented through golem, with reliable local state of models, and reliable final state of models, to cluster possibly related logs.
+* Batched model update, where state of the batch is all reliable in-memory with Golem
+* Embedder worker, for proper vectorisation of the logs that are identified to be part of the cluster, and re-assign to them a cluster - which is indeed a golem worker.
+* With previous context available (previous logs that has a cosine similarity to the numbers), we sort of make use of Retrieved Augment Generation against some Gpt-4 model to produce a reasonable description of what's going on.
+* This is much cost-effective than probably many SIEM tools available there.
+* The only thing remaining is a proper feature engineering, vectorisation, possibly some attribute reduction techniques, and fine tune the model.
+* If possible pipeline can switch the mode from `dev` to `prod` , where `dev` will involve continuous learning of the models.
 
 ## Components and Responsibilities
 
